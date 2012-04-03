@@ -1,0 +1,30 @@
+Abstract here!
+
+Build from Source - (for example git)
+	
+	Download a compressed file with the code
+	
+	Extract the code from the compressed file
+
+	Change into the extracted directory
+
+	(For Windows find what version of make was used to compile your perl)
+  		perl  -V:make
+
+	Then
+
+	>perl Makefile.PL
+
+	>make
+
+	>make test
+
+	>make install
+
+	>make clean
+	(use the windows make version as appropriate (nmake?))dir
+
+Build from cpanp - TODO
+
+Install with Dist::Zilla - This only works with the CPAN download (not the github .tar.gz file)
+$ dzil install Package-Name-.tar.gz
