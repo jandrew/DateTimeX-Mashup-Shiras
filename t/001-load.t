@@ -1,16 +1,8 @@
 #! C:/Perl/bin/perl
-### Test that the module loads
-use Test::Most;
-
+### Test that the module(s) load!(s)
+use Test::More;
 use lib '../lib', 'lib';
-
-my  @modules = (
-        'DateTimeX::Mashup::Shiras v0.07',
-        'DateTimeX::Mashup::Shiras::Types v0.15',
-    );
-
-map{ use_ok( $_ ) } @modules;
-done_testing;
-
-
-
+use DateTimeX::Mashup::Shiras v0.007;
+use DateTimeX::Mashup::Shiras::Types v0.015;
+pass( "Test loading the modules in the package" );
+done_testing();

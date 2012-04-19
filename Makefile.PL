@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "a mashup allowing multiple date formats\r",
+  "ABSTRACT" => "a mashup for consuming multiple date formats\r",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {
     "Modern::Perl" => 0,
@@ -17,6 +17,7 @@ my %WriteMakefileArgs = (
     "MooseX::ClassCompositor" => 0,
     "Test::MockTime" => 0,
     "Test::Moose" => 0,
+    "Test::More" => 0,
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
@@ -30,7 +31,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "DateTime" => 0,
     "DateTime::Format::DateManip" => 0,
-    "DateTime::Format::Epoch" => "v0.13",
+    "DateTime::Format::Epoch" => "0.013",
     "DateTime::Format::Excel" => 0,
     "Moose::Role" => 0,
     "MooseX::StrictConstructor" => 0,
@@ -39,7 +40,7 @@ my %WriteMakefileArgs = (
     "Smart::Comments" => 0,
     "version" => "0.94"
   },
-  "VERSION" => "v0.07_01",
+  "VERSION" => "v0.007_003",
   "test" => {
     "TESTS" => "t/*.t"
   }

@@ -2,7 +2,7 @@ package DateTimeX::Mashup::Shiras;
 
 use Moose::Role;
 use MooseX::StrictConstructor;
-use version; our $VERSION = qv('0.07_01');
+use version; our $VERSION = qv('0.007_003');
 use Smart::Comments -ENV;
 ### Smart-Comments turned on for DateTimeX::Mashup::Shiras
 use MooseX::Types::Moose qw(
@@ -140,7 +140,7 @@ __END__
 
 =head1 NAME
 
-DateTimeX::Mashup::Shiras - a mashup allowing multiple date formats
+DateTimeX::Mashup::Shiras - a mashup for consuming multiple date formats
 
 =head1 SYNOPSIS
     
@@ -186,20 +186,21 @@ DateTimeX::Mashup::Shiras - a mashup allowing multiple date formats
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-This is a Moose Role that provides combined functionality from three different 
-L<DateTime::Format> packages. The three modules are; 
-L<DateTime::Format::DateManip>, L<DateTime::Format::Epoch>, and 
-L<DateTime::Format::Excel>.  It then uses the Moose type coersion system to choose 
-the correct way to format the date.  This means that all input strings are 
-parsed by ::DateManip.  All numbers are parsed either by ::Format::Excel or 
-::Format::Epoch.  Since the numbers of each overlap, the general rule is all 
-positive numbers under 7 positions left of the decimal are given to ::Excel and 
-negative integers and integers of 7 or greater positions are given to ::Epoch.  
-Numbers outside of this range fail the type constraints.  I<See the 'Attribute' 
-section below for a way to force the numerical values to be parsed by the 
-non-preffered formatter in the overlap.> Currently the Epoch is fixed at midnight 
-1-January-1970.  Since all the date 'getters' return DateTime objects, all the 
-L<DateTime> formats can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ).  
+B<This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles>> 
+that provides combined functionality from three different L<DateTime::Format> 
+packages. The three modules are; L<DateTime::Format::DateManip>, 
+L<DateTime::Format::Epoch>, and L<DateTime::Format::Excel>.  It then uses the 
+Moose type coersion system to choose the correct way to format the date.  This 
+means that all input strings are parsed by ::Format::DateManip.  All numbers are 
+parsed either by ::Format::Excel or ::Format::Epoch.  Since the numbers of each 
+overlap, the rule is all positive numbers under 7 positions left of the decimal 
+are given to ::Excel and negative integers and integers of 7 or greater positions 
+are given to ::Epoch.  Numbers outside of this range fail the type constraints.  
+I<See the L</Attribute> section below for a way to force the numerical values to be 
+parsed by the non-preffered formatter in the overlap.> Currently the Epoch is fixed 
+at midnight 1-January-1970.  Since all the date 'getters' return DateTime objects, 
+all the L<DateTime> formats can be applied directly.  ex. 
+$inst->get_today_wkend->ymd( "/" ).  
 
 I learned the magic for the input coersion from 
 L<The Moose is Flying (part 2)|http://www.stonehenge.com/merlyn/LinuxMag/col95.html> 
@@ -304,7 +305,7 @@ then that formatting will be applied.
 
 =back
 
-=head1 BUGS
+=head1 SUPPORT
 
 L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
 
@@ -315,14 +316,6 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 =item Support Timezone input and changes
 
 =item ??
-
-=back
-
-=head1 SUPPORT
-
-=over
-
-=item jandrew@cpan.org
 
 =back
 
@@ -354,6 +347,8 @@ LICENSE file included with this module.
 
 =item L<version>
 
+=item L<Smart::Comments> - with the -ENV setting
+
 =item L<MooseX::Types::Moose>
 
 =item L<MooseX::Types>
@@ -375,6 +370,10 @@ LICENSE file included with this module.
 =head1 SEE ALSO
 
 =over
+
+=item L<Date::Parse>
+
+=item L<Date::Manip::Date>
 
 =item L<DateTimeX::Format>
 

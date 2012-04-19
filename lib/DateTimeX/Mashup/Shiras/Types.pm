@@ -1,9 +1,9 @@
 #! C:/Perl/bin/perl
 package DateTimeX::Mashup::Shiras::Types;
 
-use version 0.94; our $VERSION = qv('0.15_01');
+use version 0.94; our $VERSION = qv('0.015_001');
 use DateTime;
-use DateTime::Format::Epoch v0.13;
+use DateTime::Format::Epoch 0.013;
 use DateTime::Format::Excel;
 use DateTime::Format::DateManip;
 use MooseX::Types -declare => [ qw(
@@ -122,7 +122,7 @@ __END__
 
 =head1 NAME
 
-DateTimeX::Mashup::Shiras::Types - See the title
+DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
 
 =head1 SYNOPSIS
     
@@ -146,7 +146,7 @@ This is a set of custom types for the L<DateTimeX::Mashup::Shiras> Moose role.
 There are only Moose usable types in this package!  Read the code to understand 
 the type range.
 
-=head1 BUGS
+=head1 SUPPORT
 
 L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
 
@@ -157,14 +157,6 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 =item Support Timezone input and changes
 
 =item ??
-
-=back
-
-=head1 SUPPORT
-
-=over
-
-=item jandrew@cpan.org
 
 =back
 
@@ -209,6 +201,10 @@ LICENSE file included with this module.
 =head1 SEE ALSO
 
 =over
+
+=item L<Date::Parse>
+
+=item L<Date::Manip::Date>
 
 =item L<DateTimeX::Format>
 

@@ -1,5 +1,5 @@
 {
-   "abstract" : "a mashup allowing multiple date formats\r",
+   "abstract" : "a mashup for consuming multiple date formats\r",
    "author" : [
       "Jed Lund <jandrew@cpan.org>"
    ],
@@ -23,7 +23,7 @@
          "requires" : {
             "DateTime" : 0,
             "DateTime::Format::DateManip" : 0,
-            "DateTime::Format::Epoch" : "v0.13.0",
+            "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Excel" : 0,
             "Moose::Role" : 0,
             "MooseX::StrictConstructor" : 0,
@@ -40,12 +40,13 @@
             "MooseX::ClassCompositor" : 0,
             "Test::MockTime" : 0,
             "Test::Moose" : 0,
+            "Test::More" : 0,
             "Test::Most" : 0,
             "YAML::Any" : 0
          }
       }
    },
    "release_status" : "testing",
-   "version" : "v0.07_01"
+   "version" : "v0.007_003"
 }
 

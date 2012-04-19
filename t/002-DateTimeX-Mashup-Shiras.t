@@ -8,7 +8,7 @@ use Test::MockTime qw(
     restore_time
 );
 use YAML::Any;
-#~ use Smart::Comments '###';
+use Smart::Comments -ENV;
 use lib '../lib', 'lib';
 use DateTimeX::Mashup::Shiras v0.07;#Manage version tested
 
