@@ -36,7 +36,7 @@ Attributes listed here can be passed to ->new as listed below.
 
 =over
 
-=item B<Definition:> these are date attributes that can be accept data that can be 
+B<Definition:> These are date attributes that can be accept data that can be 
 formatted via any of the supported DateTime::Format modules.  All positive real numbers 
 with 6 or fewer positions left of the decimal will be treated as Excel dates.  All 
 integers over 7 digits will be treated as epoch seconds from 1-January-1970.  Negative 
@@ -45,9 +45,9 @@ format send the value as an array ref with the number in the first position and
 'epoch' in the second position.  ex. [ 60, 'epoch' ]  To force a number into 
 excel formatting do the same with 'excel' in the second position. 
 
-=item B<Default> empty
+B<Default> empty
 
-=item B<Range> See L<DateTime::Format::Excel>, L<DateTime::Format::Epoch>, and 
+B<Range> See L<DateTime::Format::Excel>, L<DateTime::Format::Epoch>, and 
 L<DateTime::Format::DateManip> for specific input range issues.  The results will 
 all be coerced to a L<DateTime> instance.  Currently input of Time Zones is L<not 
 supported|/TODO>.
@@ -58,11 +58,11 @@ supported|/TODO>.
 
 =over
 
-=item B<Definition:> This holds the definition of the last day of the week.
+B<Definition:> This holds the definition of the last day of the week.
 
-=item B<Default> 'Friday'
+B<Default> 'Friday'
 
-=item B<Range> This will accept either day names, day abbreviations 
+B<Range> This will accept either day names, day abbreviations 
 (no periods), or day integers (1 = Monday, 7 = Sunday )
 
 =back
@@ -78,14 +78,14 @@ generic implementation instructions for Moose Roles.
 
 =over
 
-=item B<Definition:> This is another way to set (or change) the various dates if 
+B<Definition:> This is another way to set (or change) the various dates if 
 additional input is required after the initial declaration of ->new( 'attribute' 
 => 'value', ) command.  
 
-=item B<Accepts:> Any $date data that can be coerced by supported ::Format modules 
+B<Accepts:> Any $date data that can be coerced by supported ::Format modules 
 I<See the attribute definitions for the details of sending dates.>
 
-=item B<Returns:> a DateTime object
+B<Returns:> a DateTime object
 
 =back
 
@@ -93,16 +93,16 @@ I<See the attribute definitions for the details of sending dates.>
 
 =over
 
-=item B<Definition:> This is how you can call various dates and format their 
+B<Definition:> This is how you can call various dates and format their 
 output.  example $self->get_date_two( 'ymd( "-" )' ). B<Note:> 'today' and 'now' 
 are special attribute cases and do not need to be defined to be retrieved.
 
-=item B<Accepts:> In this returns a L<DateTime> object which will stringify 
+B<Accepts:> In this returns a L<DateTime> object which will stringify 
 to scalar data by default.  However, if you want to format the output then call the 
 '->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
 ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
-=item B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
+B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
 then that formatting will be applied.
 
 =back
@@ -111,17 +111,17 @@ then that formatting will be applied.
 
 =over
 
-=item B<Definition:> This is a way to call the equivalent start and end of the 
+B<Definition:> This is a way to call the equivalent start and end of the 
 week definded by the given 'week_end' attribute value.  All dates listed above 
 including 'today' can be substitued for $attributename. I<'now' does not allow a 
 weekend method.>
 
-=item B<Accepts:> In this returns a L<DateTime> object which will stringify 
+B<Accepts:> In this returns a L<DateTime> object which will stringify 
 to scalar data by default.  However, if you want to format the output then call the 
 '->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
 ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
-=item B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
+B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
 then that formatting will be applied.
 
 =back
@@ -168,16 +168,16 @@ then that formatting will be applied.
 
 =head1 Build from Source - (for example git)
 	
-	Download a compressed file with the code
+Download a compressed file with the code
 	
-	Extract the code from the compressed file
+Extract the code from the compressed file
 
-	Change into the extracted directory
+Change into the extracted directory
 
-	(For Windows find what version of make was used to compile your perl)
+(For Windows find what version of make was used to compile your perl)
   		perl  -V:make
 
-	Then
+Then
 
 	>perl Makefile.PL
 
