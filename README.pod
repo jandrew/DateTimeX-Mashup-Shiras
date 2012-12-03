@@ -188,4 +188,4 @@ Then
 	>make install
 
 	>make clean
-	(use the windows make version as appropriate (nmake?))dir
+	(use the windows make version as appropriate (nmake?))
