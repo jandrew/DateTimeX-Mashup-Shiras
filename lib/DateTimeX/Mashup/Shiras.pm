@@ -2,9 +2,11 @@ package DateTimeX::Mashup::Shiras;
 
 use Moose::Role;
 use MooseX::StrictConstructor;
-use version; our $VERSION = qv('0.007_003');
-use Smart::Comments -ENV;
-### Smart-Comments turned on for DateTimeX::Mashup::Shiras
+use version; our $VERSION = qv('0.007_005');
+if( $ENV{ Smart_Comments } ){
+	use Smart::Comments -ENV;
+	### Smart-Comments turned on for DateTimeX-Mashup-Shiras
+}
 use MooseX::Types::Moose qw(
         Bool
         Str
