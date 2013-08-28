@@ -1,19 +1,19 @@
+#!perl
 package DateTimeX::Mashup::Shiras;
 
 use Moose::Role;
-use MooseX::StrictConstructor;
-use version; our $VERSION = qv('0.007_005');
+use version; our $VERSION = qv('0.014.002');
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### Smart-Comments turned on for DateTimeX-Mashup-Shiras
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.014
 }
 use MooseX::Types::Moose qw(
         Bool
         Str
         ArrayRef
     );
-use lib '../../../lib', '../../ib';
-use DateTimeX::Mashup::Shiras::Types v0.15 qw(
+use lib '../../../lib', '../../lib';
+use DateTimeX::Mashup::Shiras::Types 0.016 qw(
         weekday
         datetimedate
     );
@@ -53,7 +53,7 @@ for my $dateattribute ( @datearray ) {
 
 sub get_now{### for real time checking - get_today is when the module started
     my ( $self ) = @_;
-    ### Reached get_now
+    #### <where> - Reached get_now ...
     return to_datetimedate( 'now' );### beautiful MooseX::Types majic!
 }
 
@@ -90,25 +90,25 @@ for my $terminator ( '_wkstart', '_wkend' ) {
 
 sub _load_day{
     my ( $self, $newvalue, $oldvalue, $basedate ) = @_;
-    ### Reached _load_day with: $newvalue
+    #### <where> - Reached _load_day with: $newvalue
     my  $weekday    = $newvalue->day_of_week;
     my ( $daysfromweekstart, $daystoweekend ) = $self->_find_weekend( $weekday );
-    ### $daystoweekend
-    ### $daysfromweekstart
+    #### <where> - to weekend: $daystoweekend
+    #### <where> - to weekstart: $daysfromweekstart
     my  $dtweekstart    = $newvalue->clone->subtract( days => $daysfromweekstart );
     my  $dtweekend      = $newvalue->clone->add( days => $daystoweekend );
     my  $wkstartsetter  = '_set_' . $basedate . '_wkstart';
     $self->$wkstartsetter( $dtweekstart );
     my  $wkendsetter    = '_set_' . $basedate . '_wkend';
     $self->$wkendsetter( $dtweekend );
-    ### $dtweekstart
-    ### $dtweekend
+    #### <where> - week start day: $dtweekstart
+    #### <where> - week end day: $dtweekend
 }
 
 sub _find_weekend{
     my ( $self, $weekday ) = @_;
     my  $weekend    = $self->_get_weekend;
-    ### Reached _find_weekend
+    #### <where> - Reached _find_weekend
     my  $daystoweekend =
             ( $weekday == $weekend ) ? 
                 0 :
@@ -124,8 +124,8 @@ sub _find_weekend{
             ( $weekday < $weekstart ) ?
                 ( 7 - $weekstart + $weekday ):
                 ( $weekday - $weekstart ) ;
-    ### $daysfromweekstart
-    ### $daystoweekend
+    #### <where> - to week ene: $daysfromweekstart
+    #### <where> - to week start: $daystoweekend
     return ( $daysfromweekstart, $daystoweekend );
 }
 
@@ -146,63 +146,61 @@ DateTimeX::Mashup::Shiras - a mashup for consuming multiple date formats
 
 =head1 SYNOPSIS
     
-    package MyPackage;
-    
-    use Moose;
-    with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.07 };
+	package MyPackage;
+	use Moose;
+	with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.014 };
+	no Moose;
+	__PACKAGE__->meta->make_immutable;
 
-    no Moose;
-    __PACKAGE__->meta->make_immutable;
-
-    #! C:/Perl/bin/perl
-    use Modern::Perl;
+	#!perl
+	my  $firstinst = MyPackage->new( 
+			'date_one' => '8/26/00',
+		);
+	print $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" ) . "\n";
+	print $firstinst->get_date_one_wkend->ymd( '' ) . "\n";
+	print $firstinst->get_date_one_wkstart->ymd( '' ) . "\n";
+	print $firstinst->set_date_three( '11-September-2001' ) . "\n";
+	print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
+	print $firstinst->set_date_one( -1299767400 ) . "\n";
+	print $firstinst->set_date_one( 36764.54167 ) . "\n";
+	print $firstinst->set_date_one( 0 ) . "\n";
+	print $firstinst->set_date_one( [0, 'epoch'] ) . "\n";
     
-    my  $firstinst = MyPackage->new( 
-                                'date_one' => '8/26/00',
-        );
-    say $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" );
-    say $firstinst->get_date_one_wkend->ymd( '' );
-    say $firstinst->get_date_one_wkstart->ymd( '' );
-    say $firstinst->set_date_three( '11-September-2001' );
-    say $firstinst->get_date_three_wkstart->dmy( '' );
-    say $firstinst->set_date_one( -1299767400 );
-    say $firstinst->set_date_one( 36764.54167 );
-    say $firstinst->set_date_one( 0 );
-    say $firstinst->set_date_one( [0, 'epoch'] );
-    
-    #######################################
-    #     Output of SYNOPSIS
-    # 01:2000-August-26
-    # 02:20000901
-    # 03:20000826
-    # 04:2001-09-14T00:00:00
-    # 05:08092001
-    # 06:1928-10-26T09:30:00
-    # 07:2000-09-01T13:00:00
-    # 08:1900-01-05T00:00:00
-    # 09:1970-01-02T00:00:00
-    #######################################
+	#######################################
+	#     Output of SYNOPSIS
+	# 01:2000-August-26
+	# 02:20000901
+	# 03:20000826
+	# 04:2001-09-14T00:00:00
+	# 05:08092001
+	# 06:1928-10-26T09:30:00
+	# 07:2000-09-01T13:00:00
+	# 08:1900-01-05T00:00:00
+	# 09:1970-01-02T00:00:00
+	#######################################
     
 =head1 DESCRIPTION
 
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-B<This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles>> 
-that provides combined functionality from three different L<DateTime::Format> 
-packages. The three modules are; L<DateTime::Format::DateManip>, 
-L<DateTime::Format::Epoch>, and L<DateTime::Format::Excel>.  It then uses the 
-Moose type coersion system to choose the correct way to format the date.  This 
-means that all input strings are parsed by ::Format::DateManip.  All numbers are 
-parsed either by ::Format::Excel or ::Format::Epoch.  Since the numbers of each 
-overlap, the rule is all positive numbers under 7 positions left of the decimal 
+This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> 
+that provides combined functionality from three different DateTime::Format packages. 
+The three modules are; L<DateTime::Format::DateManip
+|https://metacpan.org/module/DateTime::Format::DateManip>, 
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, 
+and L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>.  
+It then uses the Moose type coersion system to choose the correct way to format the 
+date.  This means that all input strings are parsed by ::Format::DateManip.  All 
+numbers are parsed either by ::Format::Excel or ::Format::Epoch.  Since the numbers 
+of each overlap, the rule is all positive numbers under 7 positions left of the decimal 
 are given to ::Excel and negative integers and integers of 7 or greater positions 
 are given to ::Epoch.  Numbers outside of this range fail the type constraints.  
-I<See the L</Attribute> section below for a way to force the numerical values to be 
-parsed by the non-preffered formatter in the overlap.> Currently the Epoch is fixed 
-at midnight 1-January-1970.  Since all the date 'getters' return DateTime objects, 
-all the L<DateTime> formats can be applied directly.  ex. 
-$inst->get_today_wkend->ymd( "/" ).  
+I<See the L<Attribute|/Attribute> section below for a way to force the numerical 
+values to be parsed by the non-preffered formatter in the overlap.> Currently the 
+Epoch is fixed at midnight 1-January-1970.  Since all the succesful date 'getters' 
+return DateTime objects, all the L<DateTime|https://metacpan.org/module/DateTime> 
+methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ).  
 
 I learned the magic for the input coersion from 
 L<The Moose is Flying (part 2)|http://www.stonehenge.com/merlyn/LinuxMag/col95.html> 
@@ -211,13 +209,13 @@ while I accept the responsibility for any errors.
 
 =head2 Attributes
 
-Attributes listed here can be passed to ->new as listed below.
+Attributes listed here can be passed to -E<gt>new as listed below.
 
 =head3 (date_one|date_two|date_three)
 
 =over
 
-=item B<Definition:> these are date attributes that can be accept data that can be 
+B<Definition:> these are date attributes that can be accept data that can be 
 formatted via any of the supported DateTime::Format modules.  All positive real numbers 
 with 6 or fewer positions left of the decimal will be treated as Excel dates.  All 
 integers over 7 digits will be treated as epoch seconds from 1-January-1970.  Negative 
@@ -226,12 +224,14 @@ format send the value as an array ref with the number in the first position and
 'epoch' in the second position.  ex. [ 60, 'epoch' ]  To force a number into 
 excel formatting do the same with 'excel' in the second position. 
 
-=item B<Default> empty
+B<Default> empty
 
-=item B<Range> See L<DateTime::Format::Excel>, L<DateTime::Format::Epoch>, and 
-L<DateTime::Format::DateManip> for specific input range issues.  The results will 
-all be coerced to a L<DateTime> instance.  Currently input of Time Zones is L<not 
-supported|/TODO>.
+B<Range> See L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>, 
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, and 
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip> 
+for specific input range issues.  The results will all be coerced to a L<DateTime
+|https://metacpan.org/module/DateTime> instance.  Currently input of Time Zones is 
+L<not supported|/TODO>.
 
 =back
 
@@ -239,11 +239,11 @@ supported|/TODO>.
 
 =over
 
-=item B<Definition:> This holds the definition of the last day of the week.
+B<Definition:> This holds the definition of the last day of the week.
 
-=item B<Default> 'Friday'
+B<Default> 'Friday'
 
-=item B<Range> This will accept either day names, day abbreviations 
+B<Range> This will accept either day names, day abbreviations 
 (no periods), or day integers (1 = Monday, 7 = Sunday )
 
 =back
@@ -252,21 +252,23 @@ supported|/TODO>.
 
 Methods are used to manipulate both the public and private attributes of this role.  
 All attributes are set as 'ro' so other than ->new(  ) these methods are the only way 
-to change, read, or clear attributes.  See L<Moose::Manual::Roles> for 
-generic implementation instructions for Moose Roles.
+to change, read, or clear attributes.  See L<Moose::Manual::Roles
+|https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
+instructions.
 
 =head3 set_(date_one|date_two|date_three)( $date )
 
 =over
 
-=item B<Definition:> This is another way to set (or change) the various dates if 
+B<Definition:> This is another way to set (or change) the various dates if 
 additional input is required after the initial declaration of ->new( 'attribute' 
 => 'value', ) command.  
 
-=item B<Accepts:> Any $date data that can be coerced by supported ::Format modules 
-I<See the attribute definitions for the details of sending dates.>
+B<Accepts:> Any $date data that can be coerced by L<supported ::Format
+|/B<Range> See DateTime::Format::Excel> 
+modules.
 
-=item B<Returns:> a DateTime object
+B<Returns:> a DateTime object
 
 =back
 
@@ -274,17 +276,18 @@ I<See the attribute definitions for the details of sending dates.>
 
 =over
 
-=item B<Definition:> This is how you can call various dates and format their 
-output.  example $self->get_date_two( 'ymd( "-" )' ). B<Note:> 'today' and 'now' 
+B<Definition:> This is how you can call various dates and format their 
+output.  example $self->get_date_two( 'ymd( "-" )' ).  For this example 
+the date_two attribute had been previously set.  B<Note:> 'today' and 'now' 
 are special attribute cases and do not need to be defined to be retrieved.
 
-=item B<Accepts:> In this returns a L<DateTime> object which will stringify 
-to scalar data by default.  However, if you want to format the output then call the 
-'->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
-ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
+B<Accepts:> This returns a L<DateTime|https://metacpan.org/module/DateTime> 
+object which will stringify to scalar data by default.  However, if you want to 
+format the output then call the '->get_$attribute_name' method with the additional 
+DateTime formatting tagged on the end.  ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
-=item B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
-then that formatting will be applied.
+B<Returns:> a DateTime object.  If the object is passed DateTime methods
+then the format determined by that method will be applied.
 
 =back
 
@@ -292,17 +295,17 @@ then that formatting will be applied.
 
 =over
 
-=item B<Definition:> This is a way to call the equivalent start and end of the 
+B<Definition:> This is a way to call the equivalent start and end of the 
 week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' can be substitued for $attributename. I<'now' does not allow a 
-weekend method.>
+including 'today' can be substitued for $attributename. I<'now' does not provide a 
+weekend extrapolation.>
 
-=item B<Accepts:> In this returns a L<DateTime> object which will stringify 
-to scalar data by default.  However, if you want to format the output then call the 
-'->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
-ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
+B<Accepts:> This returns a L<DateTime|https://metacpan.org/module/DateTime> 
+object which will stringify to scalar data by default.  However, if you want to 
+format the output then call the '->get_$attribute_name' method with the additional 
+DateTime formatting tagged on the end.  ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
-=item B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
+B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
 then that formatting will be applied.
 
 =back
@@ -315,9 +318,12 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 
 =over
 
-=item Support Timezone input and changes
+B<1.> Support Timezone input and changes
 
-=item ??
+B<2.> Support custom epoch input and changes
+
+B<3.> Add L<Log::Shiras|https://metacpan.org/module/Log::Shiras> debugging in exchange for
+L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
 
 =back
 
@@ -325,9 +331,9 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 
 =over
 
-=item Jed
+Jed
 
-=item jandrew@cpan.org
+jandrew@cpan.org
 
 =back
 
@@ -339,33 +345,33 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-=head1 DEPENDANCIES
+=head1 DEPENDENCIES
 
 =over
 
-=item L<Moose::Role>
+L<version|https://metacpan.org/module/version>
 
-=item L<MooseX::StrictConstructor>
+L<Moose::Role|https://metacpan.org/module/Moose::Role>
 
-=item L<version>
+L<MooseX::Types|https://metacpan.org/module/MooseX::Types>
 
-=item L<Smart::Comments> - with the -ENV setting
+L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
 
-=item L<MooseX::Types::Moose>
+L<DateTimeX::Mashup::Shiras|https://metacpan.org/module/DateTimeX::Mashup::Shiras>
 
-=item L<MooseX::Types>
+B<includes depenencies>
 
-=item L<Smart::Comments>
+=over
 
-=item L<DateTimeX::Mashup::Shiras::Types> - in this CPAN package
+L<DateTime|https://metacpan.org/module/DateTime>
 
-=item L<DateTime>
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
 
-=item L<DateTime::Format::Epoch>
+L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
 
-=item L<DateTime::Format::Excel>
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip>
 
-=item L<DateTime::Format::DateManip>
+=back
 
 =back
 
@@ -373,11 +379,15 @@ LICENSE file included with this module.
 
 =over
 
-=item L<Date::Parse>
+L<Time::Piece|https://metacpan.org/module/Time::Piece>
 
-=item L<Date::Manip::Date>
+L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
 
-=item L<DateTimeX::Format>
+L<Date::Parse|https://metacpan.org/module/Date::Parse>
+
+L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+
+L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
 
 =back
 

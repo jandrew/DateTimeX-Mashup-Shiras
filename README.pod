@@ -2,26 +2,63 @@
 
 A mashup for consuming multiple date formats
     
+=head1 SYNOPSIS
+    
+	package MyPackage;
+	use Moose;
+	with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.014 };
+	no Moose;
+	__PACKAGE__->meta->make_immutable;
+
+	#!perl
+	my  $firstinst = MyPackage->new( 
+			'date_one' => '8/26/00',
+		);
+	print $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" ) . "\n";
+	print $firstinst->get_date_one_wkend->ymd( '' ) . "\n";
+	print $firstinst->get_date_one_wkstart->ymd( '' ) . "\n";
+	print $firstinst->set_date_three( '11-September-2001' ) . "\n";
+	print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
+	print $firstinst->set_date_one( -1299767400 ) . "\n";
+	print $firstinst->set_date_one( 36764.54167 ) . "\n";
+	print $firstinst->set_date_one( 0 ) . "\n";
+	print $firstinst->set_date_one( [0, 'epoch'] ) . "\n";
+    
+	#######################################
+	#     Output of SYNOPSIS
+	# 01:2000-August-26
+	# 02:20000901
+	# 03:20000826
+	# 04:2001-09-14T00:00:00
+	# 05:08092001
+	# 06:1928-10-26T09:30:00
+	# 07:2000-09-01T13:00:00
+	# 08:1900-01-05T00:00:00
+	# 09:1970-01-02T00:00:00
+	#######################################
+    
 =head1 DESCRIPTION
 
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-B<This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles>> 
-that provides combined functionality from three different L<DateTime::Format> 
-packages. The three modules are; L<DateTime::Format::DateManip>, 
-L<DateTime::Format::Epoch>, and L<DateTime::Format::Excel>.  It then uses the 
-Moose type coersion system to choose the correct way to format the date.  This 
-means that all input strings are parsed by ::Format::DateManip.  All numbers are 
-parsed either by ::Format::Excel or ::Format::Epoch.  Since the numbers of each 
-overlap, the rule is all positive numbers under 7 positions left of the decimal 
+This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> 
+that provides combined functionality from three different DateTime::Format packages. 
+The three modules are; L<DateTime::Format::DateManip
+|https://metacpan.org/module/DateTime::Format::DateManip>, 
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, 
+and L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>.  
+It then uses the Moose type coersion system to choose the correct way to format the 
+date.  This means that all input strings are parsed by ::Format::DateManip.  All 
+numbers are parsed either by ::Format::Excel or ::Format::Epoch.  Since the numbers 
+of each overlap, the rule is all positive numbers under 7 positions left of the decimal 
 are given to ::Excel and negative integers and integers of 7 or greater positions 
 are given to ::Epoch.  Numbers outside of this range fail the type constraints.  
-I<See the L</Attribute> section below for a way to force the numerical values to be 
-parsed by the non-preffered formatter in the overlap.> Currently the Epoch is fixed 
-at midnight 1-January-1970.  Since all the date 'getters' return DateTime objects, 
-all the L<DateTime> formats can be applied directly.  ex. 
-$inst->get_today_wkend->ymd( "/" ).  
+I<See the L<Attribute|/Attribute> section below for a way to force the numerical 
+values to be parsed by the non-preffered formatter in the overlap.> Currently the 
+Epoch is fixed at midnight 1-January-1970.  Since all the succesful date 'getters' 
+return DateTime objects, all the L<DateTime|https://metacpan.org/module/DateTime> 
+methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ).  
 
 I learned the magic for the input coersion from 
 L<The Moose is Flying (part 2)|http://www.stonehenge.com/merlyn/LinuxMag/col95.html> 
@@ -30,13 +67,13 @@ while I accept the responsibility for any errors.
 
 =head2 Attributes
 
-Attributes listed here can be passed to ->new as listed below.
+Attributes listed here can be passed to -E<gt>new as listed below.
 
 =head3 (date_one|date_two|date_three)
 
 =over
 
-B<Definition:> These are date attributes that can be accept data that can be 
+B<Definition:> these are date attributes that can be accept data that can be 
 formatted via any of the supported DateTime::Format modules.  All positive real numbers 
 with 6 or fewer positions left of the decimal will be treated as Excel dates.  All 
 integers over 7 digits will be treated as epoch seconds from 1-January-1970.  Negative 
@@ -47,10 +84,12 @@ excel formatting do the same with 'excel' in the second position.
 
 B<Default> empty
 
-B<Range> See L<DateTime::Format::Excel>, L<DateTime::Format::Epoch>, and 
-L<DateTime::Format::DateManip> for specific input range issues.  The results will 
-all be coerced to a L<DateTime> instance.  Currently input of Time Zones is L<not 
-supported|/TODO>.
+B<Range> See L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>, 
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, and 
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip> 
+for specific input range issues.  The results will all be coerced to a L<DateTime
+|https://metacpan.org/module/DateTime> instance.  Currently input of Time Zones is 
+L<not supported|/TODO>.
 
 =back
 
@@ -71,8 +110,9 @@ B<Range> This will accept either day names, day abbreviations
 
 Methods are used to manipulate both the public and private attributes of this role.  
 All attributes are set as 'ro' so other than ->new(  ) these methods are the only way 
-to change, read, or clear attributes.  See L<Moose::Manual::Roles> for 
-generic implementation instructions for Moose Roles.
+to change, read, or clear attributes.  See L<Moose::Manual::Roles
+|https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
+instructions.
 
 =head3 set_(date_one|date_two|date_three)( $date )
 
@@ -82,8 +122,9 @@ B<Definition:> This is another way to set (or change) the various dates if
 additional input is required after the initial declaration of ->new( 'attribute' 
 => 'value', ) command.  
 
-B<Accepts:> Any $date data that can be coerced by supported ::Format modules 
-I<See the attribute definitions for the details of sending dates.>
+B<Accepts:> Any $date data that can be coerced by L<supported ::Format
+|/B<Range> See DateTime::Format::Excel> 
+modules.
 
 B<Returns:> a DateTime object
 
@@ -94,16 +135,17 @@ B<Returns:> a DateTime object
 =over
 
 B<Definition:> This is how you can call various dates and format their 
-output.  example $self->get_date_two( 'ymd( "-" )' ). B<Note:> 'today' and 'now' 
+output.  example $self->get_date_two( 'ymd( "-" )' ).  For this example 
+the date_two attribute had been previously set.  B<Note:> 'today' and 'now' 
 are special attribute cases and do not need to be defined to be retrieved.
 
-B<Accepts:> In this returns a L<DateTime> object which will stringify 
-to scalar data by default.  However, if you want to format the output then call the 
-'->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
-ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
+B<Accepts:> This returns a L<DateTime|https://metacpan.org/module/DateTime> 
+object which will stringify to scalar data by default.  However, if you want to 
+format the output then call the '->get_$attribute_name' method with the additional 
+DateTime formatting tagged on the end.  ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
-B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
-then that formatting will be applied.
+B<Returns:> a DateTime object.  If the object is passed DateTime methods
+then the format determined by that method will be applied.
 
 =back
 
@@ -113,58 +155,99 @@ then that formatting will be applied.
 
 B<Definition:> This is a way to call the equivalent start and end of the 
 week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' can be substitued for $attributename. I<'now' does not allow a 
-weekend method.>
+including 'today' can be substitued for $attributename. I<'now' does not provide a 
+weekend extrapolation.>
 
-B<Accepts:> In this returns a L<DateTime> object which will stringify 
-to scalar data by default.  However, if you want to format the output then call the 
-'->get_$attribute_name' method with the additional DateTime formatting tagged on the end.  
-ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
+B<Accepts:> This returns a L<DateTime|https://metacpan.org/module/DateTime> 
+object which will stringify to scalar data by default.  However, if you want to 
+format the output then call the '->get_$attribute_name' method with the additional 
+DateTime formatting tagged on the end.  ex. ->get_today->format_cldr( "yyyy-MMMM-d" ).
 
 B<Returns:> a DateTime object.  If the object is passed DateTime formatting 
 then that formatting will be applied.
 
 =back
 
-=head1 SYNOPSIS
-    
-    package MyPackage;
-    
-    use Moose;
-    with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.07 };
+=head1 SUPPORT
 
-    no Moose;
-    __PACKAGE__->meta->make_immutable;
+L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
 
-    #! C:/Perl/bin/perl
-    use Modern::Perl;
-    
-    my  $firstinst = MyPackage->new( 
-                                'date_one' => '8/26/00',
-        );
-    say $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" );
-    say $firstinst->get_date_one_wkend->ymd( '' );
-    say $firstinst->get_date_one_wkstart->ymd( '' );
-    say $firstinst->set_date_three( '11-September-2001' );
-    say $firstinst->get_date_three_wkstart->dmy( '' );
-    say $firstinst->set_date_one( -1299767400 );
-    say $firstinst->set_date_one( 36764.54167 );
-    say $firstinst->set_date_one( 0 );
-    say $firstinst->set_date_one( [0, 'epoch'] );
-    
-    #######################################
-    #     Output of SYNOPSIS
-    # 01:2000-August-26
-    # 02:20000901
-    # 03:20000826
-    # 04:2001-09-14T00:00:00
-    # 05:08092001
-    # 06:1928-10-26T09:30:00
-    # 07:2000-09-01T13:00:00
-    # 08:1900-01-05T00:00:00
-    # 09:1970-01-02T00:00:00
-    #######################################
+=head1 TODO
 
+=over
+
+B<1.> Support Timezone input and changes
+
+B<2.> Support custom epoch input and changes
+
+B<3.> Add L<Log::Shiras|https://metacpan.org/module/Log::Shiras> debugging in exchange for
+L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
+
+=back
+
+=head1 AUTHOR
+
+=over
+
+Jed
+
+jandrew@cpan.org
+
+=back
+
+=head1 COPYRIGHT
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=head1 DEPENDENCIES
+
+=over
+
+L<version|https://metacpan.org/module/version>
+
+L<Moose::Role|https://metacpan.org/module/Moose::Role>
+
+L<MooseX::Types|https://metacpan.org/module/MooseX::Types>
+
+L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
+
+L<DateTimeX::Mashup::Shiras|https://metacpan.org/module/DateTimeX::Mashup::Shiras>
+
+B<includes depenencies>
+
+=over
+
+L<DateTime|https://metacpan.org/module/DateTime>
+
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
+
+L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
+
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip>
+
+=back
+
+=back
+
+=head1 SEE ALSO
+
+=over
+
+L<Time::Piece|https://metacpan.org/module/Time::Piece>
+
+L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
+
+L<Date::Parse|https://metacpan.org/module/Date::Parse>
+
+L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+
+L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
+
+=back
 
 =head1 Build from Source - (for example git)
 	
@@ -175,7 +258,8 @@ Extract the code from the compressed file
 Change into the extracted directory
 
 (For Windows find what version of make was used to compile your perl)
-  		perl  -V:make
+
+	perl  -V:make
 
 Then
 
@@ -188,4 +272,4 @@ Then
 	>make install
 
 	>make clean
-	(use the windows make version as appropriate (nmake?))
+	(use the windows make version as appropriate (dmake?))

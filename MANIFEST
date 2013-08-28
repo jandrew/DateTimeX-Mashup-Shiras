@@ -10,5 +10,6 @@ dist.ini
 lib/DateTimeX/Mashup/Shiras.pm
 lib/DateTimeX/Mashup/Shiras/Types.pm
 t/001-load.t
-t/002-DateTimeX-Mashup-Shiras.t
+t/002-pod.t
+t/003-DateTimeX-Mashup-Shiras.t
 t/DateTimeX-Mashup-Shiras-Example.pl

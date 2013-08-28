@@ -1,24 +1,21 @@
 package MyPackage;
-
 use Moose;
 use lib '../lib';
-with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.007 };
+with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.014 };
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
 
-#! C:/Perl/bin/perl
-use Modern::Perl;
-
+#!perl
 my  $firstinst = MyPackage->new( 
-                            'date_one' => '8/26/00',
+		'date_one' => '8/26/00',
     );
-say $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" );
-say $firstinst->get_date_one_wkend->ymd( '' );
-say $firstinst->get_date_one_wkstart->ymd( '' );
-say $firstinst->set_date_three( '11-September-2001' );
-say $firstinst->get_date_three_wkstart->dmy( '' );
-say $firstinst->set_date_one( -1299767400 );
-say $firstinst->set_date_one( 36764.54167 );
-say $firstinst->set_date_one( 0 );
-say $firstinst->set_date_one( [0, 'epoch'] );
+print $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" ) . "\n";
+print $firstinst->get_date_one_wkend->ymd( '' ) . "\n";
+print $firstinst->get_date_one_wkstart->ymd( '' ) . "\n";
+print $firstinst->set_date_three( '11-September-2001' ) . "\n";
+print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
+print $firstinst->set_date_one( -1299767400 ) . "\n";
+print $firstinst->set_date_one( 36764.54167 ) . "\n";
+print $firstinst->set_date_one( 0 ) . "\n";
+print $firstinst->set_date_one( [0, 'epoch'] ) . "\n";

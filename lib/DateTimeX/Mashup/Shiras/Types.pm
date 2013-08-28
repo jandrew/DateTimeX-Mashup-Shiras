@@ -1,7 +1,7 @@
-#! C:/Perl/bin/perl
+#!perl
 package DateTimeX::Mashup::Shiras::Types;
 
-use version 0.94; our $VERSION = qv('0.015_001');
+use version 0.94; our $VERSION = qv('0.016.002');
 use DateTime;
 use DateTime::Format::Epoch 0.013;
 use DateTime::Format::Excel;
@@ -141,10 +141,77 @@ DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
 
 =head1 DESCRIPTION
 
-This is a set of custom types for the L<DateTimeX::Mashup::Shiras> Moose role.
+L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
+Moose found in the western United States (of America).
 
-There are only Moose usable types in this package!  Read the code to understand 
-the type range.
+This is the custom type class that ships with the L<DateTimeX::Mashup::Shiras
+|https://metacpan.org/module/DateTimeX::Mashup::Shiras> package.  Wherever 
+possible errors to coersions are passed back to the type so coersion failure 
+will be explained.
+
+There are only subtypes in this package!  B<WARNING> These types should be 
+considered in a beta state.  Future type fixing will be done with a set of tests in 
+the test suit of this package.  (currently none are implemented)
+
+See L<MooseX::Types|https://metacpan.org/module/MooseX::Types> for general re-use 
+of this module.
+
+=head1 Types
+
+=head2 weekday
+
+=over
+
+B<Definition: >integers ( 1 .. 7 )
+
+B<Coercions: >from a string.  The type will try to qr//i match the passed string to an 
+english name of the week.
+
+=back
+
+=head2 datetimedate
+
+=over
+
+B<Definition: >a DateTime instance
+
+B<Coercions: >
+
+=over
+
+B<from a number> This will check the number range and attempt to turn any positive number 
+with less than 7 digits left of the decimal into a DateTime object using 
+L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel> 
+it will attempt to turn any integer with more than 6 digits into a DateTime object using 
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
+
+B<from an array ref> This will use the second element of the array ref to try and match to 
+either 'epoch' or 'excel'.  If that match works the first element is sent to the 
+number coercion already described but it forces excel or 1-Jan-1970 epoch coersion 
+based on the match.  If the second element is undef or doesn't match then the number 
+test is still performed on the first element.
+
+B<from a string> This will use 
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip> 
+to try and coerce the string into a DateTime object.
+
+=back
+
+=back
+
+=head1 GLOBAL VARIABLES
+
+=over
+
+B<$ENV{Smart_Comments}>
+
+The module uses L<Smart::Comments|https://metacpan.org/module/Smart::Comments> if the '-ENV' 
+option is set.  The 'use' is encapsulated in an if block triggered by an environmental 
+variable to comfort non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN 
+block will load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+available in this module '###',  '####', and '#####'.
+
+=back
 
 =head1 SUPPORT
 
@@ -154,9 +221,12 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 
 =over
 
-=item Support Timezone input and changes
+B<1.> Support Timezone input and changes
 
-=item ??
+B<2.> Support custom epoch input and changes
+
+B<3.> Add L<Log::Shiras|https://metacpan.org/module/Log::Shiras> debugging in exchange for
+L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
 
 =back
 
@@ -164,9 +234,9 @@ L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shi
 
 =over
 
-=item Jed
+Jed
 
-=item jandrew@cpan.org
+jandrew@cpan.org
 
 =back
 
@@ -182,19 +252,19 @@ LICENSE file included with this module.
 
 =over
 
-=item L<version>
+L<version|https://metacpan.org/module/version>
 
-=item L<MooseX::Types::Moose>
+L<MooseX::Types|https://metacpan.org/module/MooseX::Types>
 
-=item L<MooseX::Types>
+L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
 
-=item L<DateTime>
+L<DateTime|https://metacpan.org/module/DateTime>
 
-=item L<DateTime::Format::Epoch>
+L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
 
-=item L<DateTime::Format::Excel>
+L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
 
-=item L<DateTime::Format::DateManip>
+L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip>
 
 =back
 
@@ -202,11 +272,15 @@ LICENSE file included with this module.
 
 =over
 
-=item L<Date::Parse>
+L<Time::Piece|https://metacpan.org/module/Time::Piece>
 
-=item L<Date::Manip::Date>
+L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
 
-=item L<DateTimeX::Format>
+L<Date::Parse|https://metacpan.org/module/Date::Parse>
+
+L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+
+L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
 
 =back
 

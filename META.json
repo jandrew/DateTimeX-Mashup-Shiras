@@ -26,7 +26,6 @@
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Excel" : "0",
             "Moose::Role" : "0",
-            "MooseX::StrictConstructor" : "0",
             "MooseX::Types" : "0",
             "MooseX::Types::Moose" : "0",
             "Smart::Comments" : "0",
@@ -35,7 +34,6 @@
       },
       "test" : {
          "requires" : {
-            "Modern::Perl" : "0",
             "Moose" : "0",
             "MooseX::ClassCompositor" : "0",
             "Test::MockTime" : "0",
@@ -46,7 +44,7 @@
          }
       }
    },
-   "release_status" : "testing",
-   "version" : "v0.007_005"
+   "release_status" : "stable",
+   "version" : "0.014.002"
 }
 
