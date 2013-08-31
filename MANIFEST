@@ -4,7 +4,6 @@ MANIFEST
 META.json
 META.yml
 Makefile.PL
-Makefile.old
 README.pod
 dist.ini
 lib/DateTimeX/Mashup/Shiras.pm

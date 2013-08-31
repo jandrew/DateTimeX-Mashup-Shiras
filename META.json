@@ -4,7 +4,7 @@
       "Jed Lund <jandrew@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300016, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -29,6 +29,8 @@
             "MooseX::Types" : "0",
             "MooseX::Types::Moose" : "0",
             "Smart::Comments" : "0",
+            "lib" : "0",
+            "perl" : "5.008",
             "version" : "0.94"
          }
       },
@@ -44,7 +46,17 @@
          }
       }
    },
+   "provides" : {
+      "DateTimeX::Mashup::Shiras" : {
+         "file" : "lib/DateTimeX/Mashup/Shiras.pm",
+         "version" : "v0.20.2"
+      },
+      "DateTimeX::Mashup::Shiras::Types" : {
+         "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
+         "version" : "v0.20.2"
+      }
+   },
    "release_status" : "stable",
-   "version" : "0.014.002"
+   "version" : "0.020.002"
 }
 

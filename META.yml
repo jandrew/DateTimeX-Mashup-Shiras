@@ -13,12 +13,19 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300016, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: DateTimeX-Mashup-Shiras
+provides:
+  DateTimeX::Mashup::Shiras:
+    file: lib/DateTimeX/Mashup/Shiras.pm
+    version: v0.20.2
+  DateTimeX::Mashup::Shiras::Types:
+    file: lib/DateTimeX/Mashup/Shiras/Types.pm
+    version: v0.20.2
 requires:
   DateTime: 0
   DateTime::Format::DateManip: 0
@@ -28,5 +35,7 @@ requires:
   MooseX::Types: 0
   MooseX::Types::Moose: 0
   Smart::Comments: 0
+  lib: 0
+  perl: 5.008
   version: 0.94
-version: 0.014.002
+version: 0.020.002
