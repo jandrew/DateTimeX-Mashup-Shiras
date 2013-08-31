@@ -2,7 +2,8 @@
 package DateTimeX::Mashup::Shiras;
 
 use Moose::Role;
-use version; our $VERSION = qv('0.014.002');
+use 5.008;
+use version; our $VERSION = qv('0.020.002');
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
 	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.014
@@ -148,7 +149,7 @@ DateTimeX::Mashup::Shiras - a mashup for consuming multiple date formats
     
 	package MyPackage;
 	use Moose;
-	with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.014 };
+	with 'DateTimeX::Mashup::Shiras';
 	no Moose;
 	__PACKAGE__->meta->make_immutable;
 
@@ -265,7 +266,7 @@ additional input is required after the initial declaration of ->new( 'attribute'
 => 'value', ) command.  
 
 B<Accepts:> Any $date data that can be coerced by L<supported ::Format
-|/B<Range> See DateTime::Format::Excel> 
+|/DESCRIPTION> 
 modules.
 
 B<Returns:> a DateTime object
@@ -312,7 +313,7 @@ then that formatting will be applied.
 
 =head1 SUPPORT
 
-L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
+L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
 
 =head1 TODO
 
@@ -322,7 +323,7 @@ B<1.> Support Timezone input and changes
 
 B<2.> Support custom epoch input and changes
 
-B<3.> Add L<Log::Shiras|https://metacpan.org/module/Log::Shiras> debugging in exchange for
+B<3.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
 L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
 
 =back
@@ -331,9 +332,9 @@ L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
 
 =over
 
-Jed
+=item Jed Lund
 
-jandrew@cpan.org
+=item jandrew@cpan.org
 
 =back
 
@@ -344,6 +345,8 @@ it and/or modify it under the same terms as Perl itself.
 
 The full text of the license can be found in the
 LICENSE file included with this module.
+
+This software is copyrighted (c) 2013 by Jed Lund.
 
 =head1 DEPENDENCIES
 
@@ -359,6 +362,8 @@ L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
 
 L<DateTimeX::Mashup::Shiras|https://metacpan.org/module/DateTimeX::Mashup::Shiras>
 
+=over
+
 B<includes depenencies>
 
 =over
@@ -370,6 +375,8 @@ L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
 L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
 
 L<DateTime::Format::DateManip|https://metacpan.org/module/DateTime::Format::DateManip>
+
+=back
 
 =back
 

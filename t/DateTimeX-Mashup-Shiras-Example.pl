@@ -1,7 +1,7 @@
 package MyPackage;
 use Moose;
 use lib '../lib';
-with 'DateTimeX::Mashup::Shiras' => { -VERSION =>  0.014 };
+with 'DateTimeX::Mashup::Shiras';
 
 no Moose;
 __PACKAGE__->meta->make_immutable;

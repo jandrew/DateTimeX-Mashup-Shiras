@@ -1,7 +1,7 @@
 #!perl
 package DateTimeX::Mashup::Shiras::Types;
 
-use version 0.94; our $VERSION = qv('0.016.002');
+use version 0.94; our $VERSION = qv('0.020.002');
 use DateTime;
 use DateTime::Format::Epoch 0.013;
 use DateTime::Format::Excel;
@@ -215,7 +215,7 @@ available in this module '###',  '####', and '#####'.
 
 =head1 SUPPORT
 
-L<DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
+L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
 
 =head1 TODO
 
@@ -225,7 +225,7 @@ B<1.> Support Timezone input and changes
 
 B<2.> Support custom epoch input and changes
 
-B<3.> Add L<Log::Shiras|https://metacpan.org/module/Log::Shiras> debugging in exchange for
+B<3.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
 L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
 
 =back

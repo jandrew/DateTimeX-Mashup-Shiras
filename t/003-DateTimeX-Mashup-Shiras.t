@@ -10,7 +10,7 @@ use Test::MockTime qw(
 use YAML::Any;
 use Smart::Comments -ENV;
 use lib '../lib', 'lib';
-use DateTimeX::Mashup::Shiras v0.07;#Manage version tested
+use DateTimeX::Mashup::Shiras 0.020;#Manage version tested
 
 
 my  @datearray = qw(
