@@ -1,10 +1,10 @@
 {
-   "abstract" : "a mashup for consuming multiple date formats\r",
+   "abstract" : "A Moose role with three date attributes\r",
    "author" : [
       "Jed Lund <jandrew@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "perl_5"
    ],
@@ -22,15 +22,15 @@
       "runtime" : {
          "requires" : {
             "DateTime" : "0",
-            "DateTime::Format::DateManip" : "0",
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Excel" : "0",
+            "DateTime::Format::Flexible" : "0",
             "Moose::Role" : "0",
             "MooseX::Types" : "0",
             "MooseX::Types::Moose" : "0",
             "Smart::Comments" : "0",
             "lib" : "0",
-            "perl" : "5.008",
+            "perl" : "5.010",
             "version" : "0.94"
          }
       },
@@ -49,14 +49,14 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.20.2"
+         "version" : "v0.22.2"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.20.2"
+         "version" : "v0.22.2"
       }
    },
    "release_status" : "stable",
-   "version" : "0.020.002"
+   "version" : "v0.22.2"
 }
 

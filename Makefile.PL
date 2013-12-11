@@ -2,14 +2,14 @@
 use strict;
 use warnings;
 
-use 5.008;
+use 5.010;
 
 use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "a mashup for consuming multiple date formats\r",
+  "ABSTRACT" => "A Moose role with three date attributes\r",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -21,9 +21,9 @@ my %WriteMakefileArgs = (
   "NAME" => "DateTimeX::Mashup::Shiras",
   "PREREQ_PM" => {
     "DateTime" => 0,
-    "DateTime::Format::DateManip" => 0,
     "DateTime::Format::Epoch" => "0.013",
     "DateTime::Format::Excel" => 0,
+    "DateTime::Format::Flexible" => 0,
     "Moose::Role" => 0,
     "MooseX::Types" => 0,
     "MooseX::Types::Moose" => 0,
@@ -40,37 +40,38 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
-  "VERSION" => "0.020.002",
+  "VERSION" => "v0.22.2",
   "test" => {
     "TESTS" => "t/*.t"
   }
 );
 
 
-unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
-  my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
-  my $br = $WriteMakefileArgs{BUILD_REQUIRES};
-  for my $mod ( keys %$tr ) {
-    if ( exists $br->{$mod} ) {
-      $br->{$mod} = $tr->{$mod} if $tr->{$mod} > $br->{$mod};
-    }
-    else {
-      $br->{$mod} = $tr->{$mod};
-    }
-  }
-}
+my %FallbackPrereqs = (
+  "DateTime" => 0,
+  "DateTime::Format::Epoch" => "0.013",
+  "DateTime::Format::Excel" => 0,
+  "DateTime::Format::Flexible" => 0,
+  "Moose" => 0,
+  "Moose::Role" => 0,
+  "MooseX::ClassCompositor" => 0,
+  "MooseX::Types" => 0,
+  "MooseX::Types::Moose" => 0,
+  "Smart::Comments" => 0,
+  "Test::MockTime" => 0,
+  "Test::Moose" => 0,
+  "Test::More" => 0,
+  "Test::Most" => 0,
+  "YAML::Any" => 0,
+  "lib" => 0,
+  "version" => "0.94"
+);
 
-unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
-  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
-  my $pp = $WriteMakefileArgs{PREREQ_PM};
-  for my $mod ( keys %$br ) {
-    if ( exists $pp->{$mod} ) {
-      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
-    }
-    else {
-      $pp->{$mod} = $br->{$mod};
-    }
-  }
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
+  delete $WriteMakefileArgs{TEST_REQUIRES};
+  delete $WriteMakefileArgs{BUILD_REQUIRES};
+  $WriteMakefileArgs{PREREQ_PM} = \%FallbackPrereqs;
 }
 
 delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
