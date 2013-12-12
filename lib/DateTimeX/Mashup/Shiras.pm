@@ -1,11 +1,11 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.22.2");
+use version 0.94; our $VERSION = qv("v0.22.4");
 
 use Moose::Role;
 use 5.010;
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.014
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.22
 }
 use MooseX::Types::Moose qw(
         Bool

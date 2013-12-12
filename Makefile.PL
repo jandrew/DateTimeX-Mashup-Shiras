@@ -40,7 +40,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
-  "VERSION" => "v0.22.2",
+  "VERSION" => "v0.22.4",
   "test" => {
     "TESTS" => "t/*.t"
   }

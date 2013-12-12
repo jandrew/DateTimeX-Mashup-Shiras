@@ -22,10 +22,10 @@ name: DateTimeX-Mashup-Shiras
 provides:
   DateTimeX::Mashup::Shiras:
     file: lib/DateTimeX/Mashup/Shiras.pm
-    version: v0.22.2
+    version: v0.22.4
   DateTimeX::Mashup::Shiras::Types:
     file: lib/DateTimeX/Mashup/Shiras/Types.pm
-    version: v0.22.2
+    version: v0.22.4
 requires:
   DateTime: 0
   DateTime::Format::Epoch: 0.013
@@ -38,4 +38,4 @@ requires:
   lib: 0
   perl: 5.010
   version: 0.94
-version: v0.22.2
+version: v0.22.4

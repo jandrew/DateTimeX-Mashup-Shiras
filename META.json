@@ -49,14 +49,14 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.22.2"
+         "version" : "v0.22.4"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.22.2"
+         "version" : "v0.22.4"
       }
    },
    "release_status" : "stable",
-   "version" : "v0.22.2"
+   "version" : "v0.22.4"
 }
 
