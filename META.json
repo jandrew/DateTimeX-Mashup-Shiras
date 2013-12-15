@@ -1,5 +1,5 @@
 {
-   "abstract" : "A Moose role with three date attributes\r",
+   "abstract" : "A Moose role with four date attributes\r",
    "author" : [
       "Jed Lund <jandrew@cpan.org>"
    ],
@@ -38,6 +38,7 @@
          "requires" : {
             "Moose" : "0",
             "MooseX::ClassCompositor" : "0",
+            "MooseX::HasDefaults::RO" : "0",
             "Test::MockTime" : "0",
             "Test::Moose" : "0",
             "Test::More" : "0",
@@ -49,14 +50,14 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.22.4"
+         "version" : "v0.24.2"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.22.4"
+         "version" : "v0.24.2"
       }
    },
    "release_status" : "stable",
-   "version" : "v0.22.4"
+   "version" : "v0.24.2"
 }
 

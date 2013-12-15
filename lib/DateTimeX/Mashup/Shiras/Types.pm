@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version 0.94; our $VERSION = qv("v0.22.4");
+use version 0.94; our $VERSION = qv("v0.24.2");
 
 use 5.010;
 use DateTime;
@@ -10,8 +10,7 @@ use MooseX::Types -declare => [ qw(
         weekday
         datetimedate
     ) ];
-        
-        #~ MyDateTime
+
 use MooseX::Types::Moose qw(
         Object
         HashRef
@@ -23,7 +22,6 @@ use MooseX::Types::Moose qw(
 
 #########1 Dispatch Tables and Module Variables   5#########6#########7#########8#########9
 
-### Module variables here
 my  $epochdt = DateTime->new( 
         year => 1970, 
         month => 1, 

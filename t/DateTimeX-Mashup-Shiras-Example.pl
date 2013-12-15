@@ -1,5 +1,6 @@
 package MyPackage;
 use Moose;
+use MooseX::HasDefaults::RO;
 use lib '../lib';
 with 'DateTimeX::Mashup::Shiras';
 
@@ -18,3 +19,4 @@ print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
 print $firstinst->set_date_one( -1299767400 ) . "\n";
 print $firstinst->set_date_one( 36764.54167 ) . "\n";
 print $firstinst->set_date_one( 0 ) . "\n";
+print $firstinst->set_date_one( 60 ) . "\n";

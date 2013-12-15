@@ -1,11 +1,11 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.22.4");
+use version 0.94; our $VERSION = qv("v0.24.2");
 
 use Moose::Role;
 use 5.010;
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.22
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.24
 }
 use MooseX::Types::Moose qw(
         Bool
@@ -13,7 +13,7 @@ use MooseX::Types::Moose qw(
         ArrayRef
     );
 use lib '../../../lib', '../../lib';
-use DateTimeX::Mashup::Shiras::Types 0.016 qw(
+use DateTimeX::Mashup::Shiras::Types 0.024 qw(
         weekday
         datetimedate
     );
@@ -24,12 +24,12 @@ my  @datearray = qw(
         date_one
         date_two
         date_three
+        date_four
     );
 
 #########1 Public Attributes  3#########4#########5#########6#########7#########8#########9
 
 has 'week_end' =>(
-        is      => 'ro',
         isa     => weekday,
         coerce  => 1,
         default => 'Fri',# Use Friday as the end of the week, (Saturday would start the next week)
@@ -41,8 +41,7 @@ for my $dateattribute ( @datearray ) {
     my $predicate   = 'has_' . $dateattribute;
     my $reader      = 'get_' . $dateattribute;
     my $writer      = 'set_' . $dateattribute;
-    has $dateattribute =>( 
-        is          => 'ro',
+    has $dateattribute =>(
         isa         => datetimedate,
         coerce      => 1,
         predicate   => $predicate,
@@ -148,12 +147,13 @@ __END__
 
 =head1 NAME
 
-DateTimeX::Mashup::Shiras - A Moose role with three date attributes
+DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 
 =head1 SYNOPSIS
     
 	package MyPackage;
 	use Moose;
+	use MooseX::HasDefaults::RO;
 	with 'DateTimeX::Mashup::Shiras';
 	no Moose;
 	__PACKAGE__->meta->make_immutable;
@@ -189,7 +189,7 @@ L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of
 Moose found in the western United States.
 
 This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> that 
-has three flexible date attributes and some additional date functionality.  This 
+has four flexible date attributes and some additional date functionality.  This 
 role can add some date attributes to your class with built in date handling.  It 
 also provides the traditional today, now, and weekend date calculation for a given 
 day.
@@ -211,7 +211,7 @@ methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ).
 
 Attributes listed here can be passed to -E<gt>new as listed below.
 
-=head3 (date_one|date_two|date_three)
+=head3 (date_one|date_two|date_three|date_four)
 
 =over
 
@@ -246,7 +246,7 @@ to change or clear attributes.  See L<Moose::Manual::Roles
 |https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
 instructions.
 
-=head3 set_(date_one|date_two|date_three)( $date )
+=head3 set_(date_one|date_two|date_three|date_four)( $date )
 
 =over
 
@@ -259,7 +259,7 @@ B<Returns:> the equivalent DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|today)->format_command( 'format' )
+=head3 get_(date_one|date_two|date_three|date_four|today|)->format_command( 'format' )
 
 =over
 
@@ -278,8 +278,7 @@ B<Returns:> a DateTime object
 
 B<Definition:> This is a way to call the equivalent start and end of the 
 week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' can be substitued for $attributename. I<'now' does not provide a 
-weekend extrapolation.>
+including 'today' except 'now' can be substitued for $attributename.
 
 B<Returns:> a DateTime object
 

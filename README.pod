@@ -1,11 +1,12 @@
 =head1 DateTimeX::Mashup::Shiras
 
-A Moose role with three date attributes
+A Moose role with four date attributes
 
 =head1 SYNOPSIS
     
 	package MyPackage;
 	use Moose;
+	use MooseX::HasDefaults::RO;
 	with 'DateTimeX::Mashup::Shiras';
 	no Moose;
 	__PACKAGE__->meta->make_immutable;
@@ -41,7 +42,7 @@ L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of
 Moose found in the western United States.
 
 This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> that 
-has three flexible date attributes and some additional date functionality.  This 
+has four flexible date attributes and some additional date functionality.  This 
 role can add some date attributes to your class with built in date handling.  It 
 also provides the traditional today, now, and weekend date calculation for a given 
 day.
@@ -63,7 +64,7 @@ methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ).
 
 Attributes listed here can be passed to -E<gt>new as listed below.
 
-=head3 (date_one|date_two|date_three)
+=head3 (date_one|date_two|date_three|date_four)
 
 =over
 
@@ -98,7 +99,7 @@ to change or clear attributes.  See L<Moose::Manual::Roles
 |https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
 instructions.
 
-=head3 set_(date_one|date_two|date_three)( $date )
+=head3 set_(date_one|date_two|date_three|date_four)( $date )
 
 =over
 
@@ -111,7 +112,7 @@ B<Returns:> the equivalent DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|today)->format_command( 'format' )
+=head3 get_(date_one|date_two|date_three|date_four|today|)->format_command( 'format' )
 
 =over
 
@@ -130,8 +131,7 @@ B<Returns:> a DateTime object
 
 B<Definition:> This is a way to call the equivalent start and end of the 
 week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' can be substitued for $attributename. I<'now' does not provide a 
-weekend extrapolation.>
+including 'today' except 'now' can be substitued for $attributename.
 
 B<Returns:> a DateTime object
 
@@ -227,6 +227,8 @@ L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
 L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
 
 =back
+
+=cut
 
 =head1 Build from Source - (for example git)
 	

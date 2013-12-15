@@ -1,10 +1,11 @@
 ---
-abstract: "A Moose role with three date attributes\r"
+abstract: "A Moose role with four date attributes\r"
 author:
   - 'Jed Lund <jandrew@cpan.org>'
 build_requires:
   Moose: 0
   MooseX::ClassCompositor: 0
+  MooseX::HasDefaults::RO: 0
   Test::MockTime: 0
   Test::Moose: 0
   Test::More: 0
@@ -22,10 +23,10 @@ name: DateTimeX-Mashup-Shiras
 provides:
   DateTimeX::Mashup::Shiras:
     file: lib/DateTimeX/Mashup/Shiras.pm
-    version: v0.22.4
+    version: v0.24.2
   DateTimeX::Mashup::Shiras::Types:
     file: lib/DateTimeX/Mashup/Shiras/Types.pm
-    version: v0.22.4
+    version: v0.24.2
 requires:
   DateTime: 0
   DateTime::Format::Epoch: 0.013
@@ -38,4 +39,4 @@ requires:
   lib: 0
   perl: 5.010
   version: 0.94
-version: v0.22.4
+version: v0.24.2

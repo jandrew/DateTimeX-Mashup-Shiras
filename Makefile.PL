@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "A Moose role with three date attributes\r",
+  "ABSTRACT" => "A Moose role with four date attributes\r",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -34,13 +34,14 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Moose" => 0,
     "MooseX::ClassCompositor" => 0,
+    "MooseX::HasDefaults::RO" => 0,
     "Test::MockTime" => 0,
     "Test::Moose" => 0,
     "Test::More" => 0,
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
-  "VERSION" => "v0.22.4",
+  "VERSION" => "v0.24.2",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -55,6 +56,7 @@ my %FallbackPrereqs = (
   "Moose" => 0,
   "Moose::Role" => 0,
   "MooseX::ClassCompositor" => 0,
+  "MooseX::HasDefaults::RO" => 0,
   "MooseX::Types" => 0,
   "MooseX::Types::Moose" => 0,
   "Smart::Comments" => 0,

@@ -18,6 +18,7 @@ my  @datearray = qw(
         date_one
         date_two
         date_three
+		date_four
     );
 
 my  @terminators = (
@@ -36,7 +37,7 @@ my  @methods = qw(
         get_now
     );
 for my $date ( @datearray ) {
-    push @methods, 'has_' . $date, 'set_' . $date;
+    push @methods, 'has_' . $date, 'set_' . $date, 'get_' . $date;
 }
 ### <where> - finished the date array
 for my $date ( @datearray, 'today' ) {
@@ -99,6 +100,8 @@ throws_ok{ $secondinst->set_date_one( [-1, 'excel'] ) }
 														'Test the input |-1| (will fail when you force an Excel format on it)';
 is( $secondinst->set_date_one( 0 ), '1970-01-01T00:00:00',
                                                         '0 evaluates as a Nix timestamp');
+is( $secondinst->set_date_one( 60 ), '1970-01-01T00:01:00',
+                                                        '60 evaluates as a Nix timestamp');
 is( $secondinst->set_date_one( '2013-02-28 00:00:00' ),  '2013-02-28T00:00:00',
 										'Test that DateTime::Format::Flexible can handle time strings without the T');# 00:00:00
 done_testing();
