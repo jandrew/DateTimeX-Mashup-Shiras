@@ -1,8 +1,9 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version 0.94; our $VERSION = qv("v0.24.2");
+use version 0.94; our $VERSION = qv("v0.26.2");
 
 use 5.010;
 use DateTime;
+use DateTime::TimeZone 1.64;
 use DateTime::Format::Epoch 0.013;
 use DateTime::Format::Excel;
 use DateTime::Format::Flexible;
@@ -19,6 +20,7 @@ use MooseX::Types::Moose qw(
         Num
         Int
     );
+use lib '../../../lib', '../../lib';
 
 #########1 Dispatch Tables and Module Variables   5#########6#########7#########8#########9
 
@@ -141,16 +143,15 @@ DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States (of America).
 
-This is the custom type class that ships with the L<DateTimeX::Mashup::Shiras
-|https://metacpan.org/module/DateTimeX::Mashup::Shiras> package.  Wherever 
-possible coersion failures are passed back to the type so type errors will be 
-explained.
+This is the custom type class that ships with the L<DateTimeX::Mashup::Shiras> 
+package.  Wherever possible coersion failures are passed back to the type so 
+type errors will be explained.
 
 There are only subtypes in this package!  B<WARNING> These types should be 
 considered in a beta state.  Future type fixing will be done with a set of tests in 
 the test suit of this package.  (currently none are implemented)
 
-See L<MooseX::Types|https://metacpan.org/module/MooseX::Types> for general re-use 
+See L<MooseX::Types> for general re-use 
 of this module.
 
 =head1 Types
@@ -179,16 +180,13 @@ B<Coercions: >
 B<from a number> This will check the number for 0, 60 (microsoft issues), 
 negative integers, and positive integers with more than 7 digits and read them 
 as epoch (Nixy) dates with the start at January 1st, 1970 using.  
-L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
-It will turn any positive integer or decimial with less than 7 leading digits 
-into an excel date using L<DateTime::Format::Excel
-|https://metacpan.org/module/DateTime::Format::Excel>.  All positive decimals 
-with 7 or more digits will also be treated as excel dates.  Negative decimals 
-will fail.
+L<DateTime::Format::Epoch> It will turn any positive integer or decimial with 
+less than 7 leading digits into an excel date using L<DateTime::Format::Excel>.  
+All positive decimals with 7 or more digits will also be treated as excel dates.  
+Negative decimals will fail.
 
-B<from a string> This will use 
-L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexible> 
-to try and coerce the string into a DateTime object.
+B<from a string> This will use L<DateTime::Format::Flexible> to try and coerce 
+the string into a DateTime object.
 
 B<from an array ref> This will use the second element of the array ref to try 
 to match 'epoch', 'excel', or 'string'.  If that match works the first element 
@@ -204,10 +202,10 @@ is evaluated as described above otherwise it is evaluated as a string.
 
 B<$ENV{Smart_Comments}>
 
-The module uses L<Smart::Comments|https://metacpan.org/module/Smart::Comments> if the '-ENV' 
-option is set.  The 'use' is encapsulated in an if block triggered by an environmental 
-variable to comfort non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN 
-block will load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
+encapsulated in an if block triggered by an environmental variable to comfort 
+non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will 
+load and turn on smart comment reporting.  There are three levels of 'Smartness' 
 available in this module '###',  '####', and '#####'.
 
 =back
@@ -225,7 +223,7 @@ B<1.> Support Timezone input and changes
 B<2.> Support custom epoch input and changes
 
 B<3.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
-L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
+L<Smart::Comments>
 
 =over
 
@@ -259,19 +257,19 @@ This software is copyrighted (c) 2013 by Jed Lund.
 
 =over
 
-L<version|https://metacpan.org/module/version>
+L<version>
 
-L<MooseX::Types|https://metacpan.org/module/MooseX::Types>
+L<MooseX::Types>
 
-L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
+L<MooseX::Types::Moose>
 
-L<DateTime|https://metacpan.org/module/DateTime>
+L<DateTime>
 
-L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
+L<DateTime::Format::Epoch>
 
-L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
+L<DateTime::Format::Excel>
 
-L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexible>
+L<DateTime::Format::Flexible>
 
 =back
 
@@ -279,15 +277,15 @@ L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexi
 
 =over
 
-L<Time::Piece|https://metacpan.org/module/Time::Piece>
+L<Time::Piece>
 
-L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
+L<MooseX::Types::Perl>
 
-L<Date::Parse|https://metacpan.org/module/Date::Parse>
+L<Date::Parse>
 
-L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+L<Date::Manip::Date>
 
-L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
+L<DateTimeX::Format>
 
 =back
 

@@ -1,10 +1,14 @@
 #! C:/Perl/bin/perl
 ### Test that the pod files run
-use Test::Most;
+use Test::More;
 use Test::More skip_all => 'Developer only test';
-use lib '../lib', 'lib';
 eval "use Test::Pod 1.48";
-plan skip_all => "Test::Pod 1.48 required for testing POD" if $@;
-all_pod_files_ok();
+if( $@ ){
+	plan skip_all => "Test::Pod 1.48 required for testing POD";
+}else{
+	plan tests => 2;
+}
+pod_file_ok( '..\lib\DateTimeX\Mashup\Shiras\Types.pm', "Types file has good POD" );
+pod_file_ok( '..\lib\DateTimeX\Mashup\Shiras.pm', "Shiras file has good POD" );
 explain "...Test Done";
 done_testing();

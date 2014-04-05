@@ -11,7 +11,7 @@ use YAML::Any;
 use DateTime::Format::Flexible;
 use Smart::Comments -ENV;
 use lib '../lib', 'lib';
-use DateTimeX::Mashup::Shiras 0.022;#Manage version tested
+use DateTimeX::Mashup::Shiras 0.026;#Manage version tested
 
 
 my  @datearray = qw(

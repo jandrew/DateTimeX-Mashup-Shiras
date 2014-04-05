@@ -1,11 +1,11 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.24.2");
+use version 0.94; our $VERSION = qv("v0.26.2");
 
 use Moose::Role;
 use 5.010;
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.24
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.26
 }
 use MooseX::Types::Moose qw(
         Bool
@@ -13,7 +13,7 @@ use MooseX::Types::Moose qw(
         ArrayRef
     );
 use lib '../../../lib', '../../lib';
-use DateTimeX::Mashup::Shiras::Types 0.024 qw(
+use DateTimeX::Mashup::Shiras::Types 0.026 qw(
         weekday
         datetimedate
     );
@@ -188,7 +188,7 @@ DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> that 
+This is a Moose Role (L<Moose::Manual::Roles>) that 
 has four flexible date attributes and some additional date functionality.  This 
 role can add some date attributes to your class with built in date handling.  It 
 also provides the traditional today, now, and weekend date calculation for a given 
