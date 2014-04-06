@@ -1,5 +1,6 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.26.2");
+our	$AUTHORITY = 'cpan:JANDREW';
+use version 0.94; our $VERSION = qv("v0.28.2");
 
 use Moose::Role;
 use 5.010;

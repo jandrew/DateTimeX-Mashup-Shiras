@@ -25,7 +25,6 @@
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Excel" : "0",
             "DateTime::Format::Flexible" : "0",
-            "DateTime::TimeZone" : "1.64",
             "Moose::Role" : "0",
             "MooseX::Types" : "0",
             "MooseX::Types::Moose" : "0",
@@ -51,14 +50,15 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.26.2"
+         "version" : "v0.28.2"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.26.2"
+         "version" : "v0.28.2"
       }
    },
    "release_status" : "stable",
-   "version" : "v0.26.2"
+   "version" : "v0.28.2",
+   "x_authority" : "cpan:JANDREW"
 }
 

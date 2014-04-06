@@ -1,9 +1,9 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version 0.94; our $VERSION = qv("v0.26.2");
+our	$AUTHORITY = 'cpan:JANDREW';
+use version 0.94; our $VERSION = qv("v0.28.2");
 
 use 5.010;
 use DateTime;
-use DateTime::TimeZone 1.64;
 use DateTime::Format::Epoch 0.013;
 use DateTime::Format::Excel;
 use DateTime::Format::Flexible;
@@ -46,7 +46,7 @@ my  $weekdays = {
         'Saturday'      => 6,
         'Sunday'        => 7,
     };
-my	$local_time_zone = DateTime::TimeZone->new( name => 'local' );
+#~ my	$local_time_zone = DateTime::TimeZone->new( name => 'local' );
 
 #########1 Subtypes           3#########4#########5#########6#########7#########8#########9
 
@@ -94,7 +94,7 @@ coerce datetimedate, from Num|ArrayRef|Str,
 				undef;
 		if( !$return ){
 			#~ my 	$dm = ParseDate( $arg );
-				$dt = DateTime::Format::Flexible->parse_datetime( $arg, time_zone => $local_time_zone, );
+				$dt = DateTime::Format::Flexible->parse_datetime( $arg,  );# time_zone => $local_time_zone,
 				#~ $dt->set_time_zone( DateTime::TimeZone->new( name => 'America/Chicago' ) );
 			$return = ( $dt ) ? $dt :
 				"Failed to build a date time from DateTime::Format::DateManip (or any other method) for string -$arg-\n";

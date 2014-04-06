@@ -4,7 +4,6 @@ use	Test::More;
 use	lib '../lib', 'lib';
 BEGIN{ use_ok( version ) };
 BEGIN{ use_ok( Moose::Role ) };
-BEGIN{ use_ok( DateTime::TimeZone, 1.64 ) };
 BEGIN{ use_ok( DateTime::Format::Epoch, 0.013 ) };
 BEGIN{ use_ok( DateTime::Format::Excel ) };
 BEGIN{ use_ok( DateTime::Format::Flexible ) };

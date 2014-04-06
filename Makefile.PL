@@ -24,7 +24,6 @@ my %WriteMakefileArgs = (
     "DateTime::Format::Epoch" => "0.013",
     "DateTime::Format::Excel" => 0,
     "DateTime::Format::Flexible" => 0,
-    "DateTime::TimeZone" => "1.64",
     "Moose::Role" => 0,
     "MooseX::Types" => 0,
     "MooseX::Types::Moose" => 0,
@@ -42,7 +41,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
-  "VERSION" => "v0.26.2",
+  "VERSION" => "v0.28.2",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -54,7 +53,6 @@ my %FallbackPrereqs = (
   "DateTime::Format::Epoch" => "0.013",
   "DateTime::Format::Excel" => 0,
   "DateTime::Format::Flexible" => 0,
-  "DateTime::TimeZone" => "1.64",
   "Moose" => 0,
   "Moose::Role" => 0,
   "MooseX::ClassCompositor" => 0,
