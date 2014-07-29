@@ -23,6 +23,7 @@ A Moose role with four date attributes
 	print $firstinst->set_date_one( -1299767400 ) . "\n";
 	print $firstinst->set_date_one( 36764.54167 ) . "\n";
 	print $firstinst->set_date_one( 0 ) . "\n";
+	print $firstinst->set_date_one( 60 ) . "\n";
     
 	#######################################
 	#     Output of SYNOPSIS
@@ -34,6 +35,7 @@ A Moose role with four date attributes
 	# 06:1928-10-26T09:30:00
 	# 07:2000-08-26T13:00:00
 	# 09:1970-01-01T00:00:00
+	# 09:1970-01-01T00:01:00
 	#######################################
     
 =head1 DESCRIPTION
@@ -41,24 +43,21 @@ A Moose role with four date attributes
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-This is a Moose L<Role|https://metacpan.org/module/Moose::Manual::Roles> that 
+This is a Moose Role (L<Moose::Manual::Roles>) that 
 has four flexible date attributes and some additional date functionality.  This 
 role can add some date attributes to your class with built in date handling.  It 
 also provides the traditional today, now, and weekend date calculation for a given 
 day.
 
 The flexibility of input for the dates comes from three different DateTime::Format 
-packages using type coersion.  The three modules are; L<DateTime::Format::Flexible
-|https://metacpan.org/module/DateTime::Format::Flexible>, 
-L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, 
-and L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>.  
-The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types
-|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types> as a type coersion.  
-This means that all input strings are parsed by ::Format::Flexible.  All numbers 
-are parsed either by ::Format::Excel or ::Format::Epoch.  See the type package 
-for the details and corner cases.  Since all the succesful date 'getters' 
-return DateTime objects, all the L<DateTime|https://metacpan.org/module/DateTime> 
-methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ). 
+packages using type coersion.  The three modules are; L<DateTime::Format::Flexible>.  
+L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.  
+The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types> as a type 
+coersion.  This means that all input strings are parsed by ::Format::Flexible.  All 
+numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type 
+package for the details and corner cases.  Since all the succesful date 'getters' 
+return DateTime objects, all the L<DateTime> methods can be applied directly.  
+ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ). 
 
 =head2 Attributes
 
@@ -69,12 +68,12 @@ Attributes listed here can be passed to -E<gt>new as listed below.
 =over
 
 B<Definition:> these are date attributes set to the type 'datetimedate'.  
-See the L<Type|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types> 
-Class for more details.
+See the L<Type|DateTimeX::Mashup::Shiras::Types> Class for more details.
 
 B<Default> empty
 
-B<Range> Currently input of Time Zones is L<not supported|/TODO>.
+B<Range> epoch numbers, DateTime definition HashRefs, Date Epoch ArrayRefs, and 
+human readable strings
 
 =back
 
@@ -95,8 +94,7 @@ B<Range> This will accept either day names, day abbreviations
 
 Methods are used to manipulate both the public and private attributes of this role.  
 All attributes are set as 'ro' so other than ->new(  ) these methods are the only way 
-to change or clear attributes.  See L<Moose::Manual::Roles
-|https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
+to change or clear attributes.  See L<Moose::Manual::Roles> for generic implementation 
 instructions.
 
 =head3 set_(date_one|date_two|date_three|date_four)( $date )
@@ -112,7 +110,7 @@ B<Returns:> the equivalent DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|date_four|today|)->format_command( 'format' )
+=head3 get_(date_one|date_two|date_three|date_four|today|now)->format_command( 'format' )
 
 =over
 
@@ -125,17 +123,27 @@ B<Returns:> a DateTime object
 
 =back
 
-=head3 get_$attribute_name_(wkend|wkstart)
+=head3 get_(date_one|date_two|date_three|date_four|today)_(wkend|wkstart)
 
 =over
 
 B<Definition:> This is a way to call the equivalent start and end of the 
-week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' except 'now' can be substitued for $attributename.
+week definded by the given 'week_end' attribute value.  'now' is not included 
+in this list.
 
 B<Returns:> a DateTime object
 
 =back
+
+=head1 GLOBAL VARIABLES
+
+=head2 $ENV{Smart_Comments}
+
+The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
+encapsulated in an if block triggered by an environmental variable to comfort 
+non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will 
+load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+available in this module '###',  '####', and '#####'.
 
 =head1 SUPPORT
 
@@ -145,16 +153,12 @@ L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mas
 
 =over
 
-B<1.> Support Timezone input and changes
-
-B<2.> Support custom epoch input and changes
-
-B<3.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
-L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
+B<1.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
+L<Smart::Comments>
 
 =over
 
-* Get Log::Shiras CPAN ready first
+* Get Log::Shiras CPAN ready first (Still some deep recursion issues)
 
 =back
 
@@ -178,23 +182,25 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013 by Jed Lund.
+This software is copyrighted (c) 2013, 2014 by Jed Lund.
 
 =head1 DEPENDENCIES
 
 =over
 
-L<version|https://metacpan.org/module/version>
+B<5.010> - (L<perl>)
 
-L<Moose::Role|https://metacpan.org/module/Moose::Role>
+L<version>
 
-L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
+L<Moose::Role>
 
-L<DateTimeX::Mashup::Shiras::Types|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types>
+L<Type::Tiny>
+
+L<DateTimeX::Mashup::Shiras::Types>
 
 =over
 
-B<includes depenencies>
+B<includes depenencies to>
 
 =over
 
@@ -216,33 +222,38 @@ L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexi
 
 =over
 
-L<Time::Piece|https://metacpan.org/module/Time::Piece>
+L<Time::Piece>
 
-L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
+L<MooseX::Types::Perl>
 
-L<Date::Parse|https://metacpan.org/module/Date::Parse>
+L<Date::Parse>
 
-L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+L<Date::Manip::Date>
 
-L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
+L<DateTimeX::Format>
 
 =back
 
-=cut
+=head1 Build/Install from Source
 
-=head1 Build from Source - (for example git)
+=over
 	
-Download a compressed file with the code
+B<1.> Download a compressed file with the code
 	
-Extract the code from the compressed file
+B<2.> Extract the code from the compressed file.  If you are using tar this should work:
 
-Change into the extracted directory
+        tar -zxvf DateTimeX-Mashup-Shiras-v0.xx.tar.gz
+
+B<3.> Change (cd) into the extracted directory
+
+=back
 
 (For Windows find what version of make was used to compile your perl)
 
 	perl  -V:make
 
 Then
+(for Windows substitute the correct make function (s/make/dmake/g)?)
 
 	>perl Makefile.PL
 
@@ -250,7 +261,8 @@ Then
 
 	>make test
 
-	>make install
+	>make install # As sudo/root
 
 	>make clean
-	(use the windows make version as appropriate (dmake?))
+	
+=cut

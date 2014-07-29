@@ -1,7 +1,7 @@
 package MyPackage;
 use Moose;
 use MooseX::HasDefaults::RO;
-use lib '../lib';
+use lib '../../../lib';
 with 'DateTimeX::Mashup::Shiras';
 
 no Moose;

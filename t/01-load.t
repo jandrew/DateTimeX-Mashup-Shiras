@@ -1,19 +1,20 @@
 #! C:/Perl/bin/perl
 ### Test that the module(s) load!(s)
-use	Test::More;
+use	Test::More tests => 13;
 use	lib '../lib', 'lib';
 BEGIN{ use_ok( version ) };
 BEGIN{ use_ok( Moose::Role ) };
 BEGIN{ use_ok( DateTime::Format::Epoch, 0.013 ) };
-BEGIN{ use_ok( DateTime::Format::Excel ) };
+BEGIN{ use_ok( DateTimeX::Format::Excel, v0.12 ) };
 BEGIN{ use_ok( DateTime::Format::Flexible ) };
-BEGIN{ use_ok( MooseX::Types ) };
-BEGIN{ use_ok( MooseX::Types::Moose ) };
+BEGIN{ $ENV{PERL_TYPE_TINY_XS} = 0; };
+BEGIN{ use_ok( Type::Tiny, 0.046 ) };
 BEGIN{ use_ok( Test::Moose ) };
-BEGIN{ use_ok( MooseX::ClassCompositor ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.026 ) };
 BEGIN{ use_ok( Test::MockTime ) };
 BEGIN{ use_ok( YAML::Any ) };
 BEGIN{ use_ok( Smart::Comments ) };
-BEGIN{ use_ok( DateTimeX::Mashup::Shiras, 0.026 ) };
-BEGIN{ use_ok( DateTimeX::Mashup::Shiras::Types, 0.026 ) };
+use lib '../lib';
+BEGIN{ use_ok( DateTimeX::Mashup::Shiras, 0.030 ) };
+BEGIN{ use_ok( DateTimeX::Mashup::Shiras::Types, 0.030 ) };
 done_testing();

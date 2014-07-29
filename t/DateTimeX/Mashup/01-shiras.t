@@ -1,8 +1,12 @@
 #!perl
 #######  Test File for DateTimeX::Mashup::Shiras  #######
-use Test::Most;
+use Test::Most tests => 51;
 use Test::Moose;
-use MooseX::ClassCompositor;
+BEGIN{
+	$ENV{PERL_TYPE_TINY_XS} = 0;
+	#~ $ENV{ Smart_Comments } = '### #### #####';
+}
+use MooseX::ShortCut::BuildInstance qw( build_class );
 use Test::MockTime qw(
     set_fixed_time
     restore_time
@@ -10,8 +14,8 @@ use Test::MockTime qw(
 use YAML::Any;
 use DateTime::Format::Flexible;
 use Smart::Comments -ENV;
-use lib '../lib', 'lib';
-use DateTimeX::Mashup::Shiras 0.026;#Manage version tested
+use lib '../../../lib', 'lib';
+use DateTimeX::Mashup::Shiras v0.30;#Manage version tested
 
 
 my  @datearray = qw(
@@ -52,10 +56,9 @@ my  ( $wait, $class, $firstinst, $secondinst );
 $| = 1;
 
 # easy questions
-$class = MooseX::ClassCompositor->new({
-    class_basename => 'Test',
-})->class_for( 
-    'DateTimeX::Mashup::Shiras',
+$class = build_class(
+    package => 'TestClass',
+	add_roles_in_sequence => [ 'DateTimeX::Mashup::Shiras' ],
 );
 map has_attribute_ok( $class, $_ ), @attributes;
 ### <where> - finished the attribute tests

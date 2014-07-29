@@ -1,22 +1,27 @@
 package DateTimeX::Mashup::Shiras;
-our	$AUTHORITY = 'cpan:JANDREW';
-use version 0.94; our $VERSION = qv("v0.28.2");
+use version 0.94; our $VERSION = qv("v0.30.2");
 
 use Moose::Role;
 use 5.010;
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.26
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.28
 }
-use MooseX::Types::Moose qw(
+use Types::Standard qw(
         Bool
         Str
         ArrayRef
     );
 use lib '../../../lib', '../../lib';
-use DateTimeX::Mashup::Shiras::Types 0.026 qw(
-        weekday
-        datetimedate
+use DateTimeX::Mashup::Shiras::Types v0.30 qw(
+        WeekDay
+		DateTimeDate
+		
+		WeekDayFromStr
+		DateTimeDateFromHashRef
+		DateTimeDateFromArrayRef
+		DateTimeDateFromNum
+		DateTimeDateFromStr
     );
 
 #########1 Dispatch Tables and Module Variables   5#########6#########7#########8#########9
@@ -31,7 +36,7 @@ my  @datearray = qw(
 #########1 Public Attributes  3#########4#########5#########6#########7#########8#########9
 
 has 'week_end' =>(
-        isa     => weekday,
+        isa     => WeekDay->plus_coercions( WeekDayFromStr ),
         coerce  => 1,
         default => 'Fri',# Use Friday as the end of the week, (Saturday would start the next week)
         reader  => '_get_weekend',
@@ -43,7 +48,12 @@ for my $dateattribute ( @datearray ) {
     my $reader      = 'get_' . $dateattribute;
     my $writer      = 'set_' . $dateattribute;
     has $dateattribute =>(
-        isa         => datetimedate,
+        isa         => DateTimeDate->plus_coercions(
+							DateTimeDateFromHashRef,
+							DateTimeDateFromArrayRef,
+							DateTimeDateFromNum,
+							DateTimeDateFromStr,
+						),
         coerce      => 1,
         predicate   => $predicate,
         reader      => $reader,
@@ -57,7 +67,7 @@ for my $dateattribute ( @datearray ) {
 sub get_now{### for real time checking - get_today is when the module started
     my ( $self ) = @_;
     #### <where> - Reached get_now ...
-    return to_datetimedate( 'now' );### beautiful MooseX::Types majic!
+    return DateTimeDateFromStr->( 'now' );
 }
 
 #########1 Private Attributes 3#########4#########5#########6#########7#########8#########9
@@ -65,7 +75,7 @@ sub get_now{### for real time checking - get_today is when the module started
 # set up a private attribute with a public getter for 'today'
 has '_today' => (
         is          => 'ro',
-        isa         => datetimedate,
+        isa         => DateTimeDate->plus_coercions( DateTimeDateFromStr ),
         required    => 1,
         lazy        => 1,
         coerce      => 1,
@@ -81,8 +91,13 @@ for my $terminator ( '_wkstart', '_wkend' ) {
         my  $reader     = 'get_' . $attributename;
         my  $writer     = '_set_' . $attributename;
         has '_' . $attributename =>( #
-                is => 'ro',
-                isa         => datetimedate,
+                is 			=> 'ro',
+                isa         => DateTimeDate->plus_coercions(
+									DateTimeDateFromHashRef,
+									DateTimeDateFromArrayRef,
+									DateTimeDateFromNum,
+									DateTimeDateFromStr,
+								),
                 reader      => $reader,
                 writer      => $writer,
             );
@@ -171,6 +186,7 @@ DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 	print $firstinst->set_date_one( -1299767400 ) . "\n";
 	print $firstinst->set_date_one( 36764.54167 ) . "\n";
 	print $firstinst->set_date_one( 0 ) . "\n";
+	print $firstinst->set_date_one( 60 ) . "\n";
     
 	#######################################
 	#     Output of SYNOPSIS
@@ -182,6 +198,7 @@ DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 	# 06:1928-10-26T09:30:00
 	# 07:2000-08-26T13:00:00
 	# 09:1970-01-01T00:00:00
+	# 09:1970-01-01T00:01:00
 	#######################################
     
 =head1 DESCRIPTION
@@ -196,17 +213,14 @@ also provides the traditional today, now, and weekend date calculation for a giv
 day.
 
 The flexibility of input for the dates comes from three different DateTime::Format 
-packages using type coersion.  The three modules are; L<DateTime::Format::Flexible
-|https://metacpan.org/module/DateTime::Format::Flexible>, 
-L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>, 
-and L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>.  
-The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types
-|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types> as a type coersion.  
-This means that all input strings are parsed by ::Format::Flexible.  All numbers 
-are parsed either by ::Format::Excel or ::Format::Epoch.  See the type package 
-for the details and corner cases.  Since all the succesful date 'getters' 
-return DateTime objects, all the L<DateTime|https://metacpan.org/module/DateTime> 
-methods can be applied directly.  ex. $inst->get_today_wkend->ymd( "/" ). 
+packages using type coersion.  The three modules are; L<DateTime::Format::Flexible>.  
+L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.  
+The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types> as a type 
+coersion.  This means that all input strings are parsed by ::Format::Flexible.  All 
+numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type 
+package for the details and corner cases.  Since all the succesful date 'getters' 
+return DateTime objects, all the L<DateTime> methods can be applied directly.  
+ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ). 
 
 =head2 Attributes
 
@@ -217,12 +231,12 @@ Attributes listed here can be passed to -E<gt>new as listed below.
 =over
 
 B<Definition:> these are date attributes set to the type 'datetimedate'.  
-See the L<Type|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types> 
-Class for more details.
+See the L<Type|DateTimeX::Mashup::Shiras::Types> Class for more details.
 
 B<Default> empty
 
-B<Range> Currently input of Time Zones is L<not supported|/TODO>.
+B<Range> epoch numbers, DateTime definition HashRefs, Date Epoch ArrayRefs, and 
+human readable strings
 
 =back
 
@@ -243,8 +257,7 @@ B<Range> This will accept either day names, day abbreviations
 
 Methods are used to manipulate both the public and private attributes of this role.  
 All attributes are set as 'ro' so other than ->new(  ) these methods are the only way 
-to change or clear attributes.  See L<Moose::Manual::Roles
-|https://metacpan.org/module/Moose::Manual::Roles> for generic implementation 
+to change or clear attributes.  See L<Moose::Manual::Roles> for generic implementation 
 instructions.
 
 =head3 set_(date_one|date_two|date_three|date_four)( $date )
@@ -260,7 +273,7 @@ B<Returns:> the equivalent DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|date_four|today|)->format_command( 'format' )
+=head3 get_(date_one|date_two|date_three|date_four|today|now)->format_command( 'format' )
 
 =over
 
@@ -273,17 +286,27 @@ B<Returns:> a DateTime object
 
 =back
 
-=head3 get_$attribute_name_(wkend|wkstart)
+=head3 get_(date_one|date_two|date_three|date_four|today)_(wkend|wkstart)
 
 =over
 
 B<Definition:> This is a way to call the equivalent start and end of the 
-week definded by the given 'week_end' attribute value.  All dates listed above 
-including 'today' except 'now' can be substitued for $attributename.
+week definded by the given 'week_end' attribute value.  'now' is not included 
+in this list.
 
 B<Returns:> a DateTime object
 
 =back
+
+=head1 GLOBAL VARIABLES
+
+=head2 $ENV{Smart_Comments}
+
+The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
+encapsulated in an if block triggered by an environmental variable to comfort 
+non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will 
+load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+available in this module '###',  '####', and '#####'.
 
 =head1 SUPPORT
 
@@ -293,16 +316,12 @@ L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mas
 
 =over
 
-B<1.> Support Timezone input and changes
-
-B<2.> Support custom epoch input and changes
-
-B<3.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
-L<Smart::Comments|https://metacpan.org/module/Smart::Comments>
+B<1.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
+L<Smart::Comments>
 
 =over
 
-* Get Log::Shiras CPAN ready first
+* Get Log::Shiras CPAN ready first (Still some deep recursion issues)
 
 =back
 
@@ -326,23 +345,25 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013 by Jed Lund.
+This software is copyrighted (c) 2013, 2014 by Jed Lund.
 
 =head1 DEPENDENCIES
 
 =over
 
-L<version|https://metacpan.org/module/version>
+B<5.010> - (L<perl>)
 
-L<Moose::Role|https://metacpan.org/module/Moose::Role>
+L<version>
 
-L<MooseX::Types::Moose|https://metacpan.org/module/MooseX::Types::Moose>
+L<Moose::Role>
 
-L<DateTimeX::Mashup::Shiras::Types|https://metacpan.org/module/DateTimeX::Mashup::Shiras::Types>
+L<Type::Tiny>
+
+L<DateTimeX::Mashup::Shiras::Types>
 
 =over
 
-B<includes depenencies>
+B<includes depenencies to>
 
 =over
 
@@ -364,15 +385,15 @@ L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexi
 
 =over
 
-L<Time::Piece|https://metacpan.org/module/Time::Piece>
+L<Time::Piece>
 
-L<MooseX::Types::Perl|https://metacpan.org/module/MooseX::Types::Perl>
+L<MooseX::Types::Perl>
 
-L<Date::Parse|https://metacpan.org/module/Date::Parse>
+L<Date::Parse>
 
-L<Date::Manip::Date|https://metacpan.org/module/Date::Manip::Date>
+L<Date::Manip::Date>
 
-L<DateTimeX::Format|https://metacpan.org/module/DateTimeX::Format>
+L<DateTimeX::Format>
 
 =back
 
