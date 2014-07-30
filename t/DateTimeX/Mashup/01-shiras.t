@@ -6,7 +6,7 @@ BEGIN{
 	$ENV{PERL_TYPE_TINY_XS} = 0;
 	#~ $ENV{ Smart_Comments } = '### #### #####';
 }
-use MooseX::ShortCut::BuildInstance qw( build_class );
+use MooseX::ShortCut::BuildInstance v1.26 qw( build_class );
 use Test::MockTime qw(
     set_fixed_time
     restore_time
