@@ -1,12 +1,13 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.30.4");
+use version 0.94; our $VERSION = qv("v0.31_1");
 
-use Moose::Role;
-use 5.010;
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.28
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.31
 }
+
+use 5.010;
+use MooseX::Role::Parameterized;
 use Types::Standard qw(
         Bool
         Str
@@ -24,16 +25,74 @@ use DateTimeX::Mashup::Shiras::Types v0.30 qw(
 		DateTimeDateFromStr
     );
 
-#########1 Dispatch Tables and Module Variables   5#########6#########7#########8#########9
-
 my  @datearray = qw(
         date_one
         date_two
         date_three
         date_four
     );
+my	@attribute_list;
 
-#########1 Public Attributes  3#########4#########5#########6#########7#########8#########9
+#########1 Import and set up the attributes to be built     6#########7#########8#########9
+ 
+parameter date_attributes =>(
+		isa      	=> ArrayRef,
+		predicate	=> '_has_date_attributes',
+	);
+
+role{
+	( my $input, ) = @_;
+	##### <where> - Loaded ref: $input
+	if( $input->_has_date_attributes ){
+		@attribute_list = @{$input->date_attributes};
+		### <where> - Ref has a date attribute list: @attribute_list
+	}else{
+		@attribute_list = @datearray;
+		### <where> - Using the default attribute list: @attribute_list
+	}
+
+	# build public attributes from the list
+	for my $dateattribute ( @attribute_list ) {
+		my $predicate   = 'has_' . $dateattribute;
+		my $reader      = 'get_' . $dateattribute;
+		my $writer      = 'set_' . $dateattribute;
+		has $dateattribute =>(
+			isa         => DateTimeDate->plus_coercions(
+								DateTimeDateFromHashRef,
+								DateTimeDateFromArrayRef,
+								DateTimeDateFromNum,
+								DateTimeDateFromStr,
+							),
+			coerce      => 1,
+			predicate   => $predicate,
+			reader      => $reader,
+			writer      => $writer,
+			trigger     => sub{ $_[3] = $dateattribute; _load_day( @_ ); },
+		);
+	}
+	
+	# build private attributes from the list
+	for my $terminator ( '_wkstart', '_wkend' ) {
+		for my $datename ( @attribute_list, 'today' ) {
+			my  $attributename   = $datename . $terminator;
+			my  $reader     = 'get_' . $attributename;
+			my  $writer     = '_set_' . $attributename;
+			has '_' . $attributename =>( #
+					is 			=> 'ro',
+					isa         => DateTimeDate->plus_coercions(
+										DateTimeDateFromHashRef,
+										DateTimeDateFromArrayRef,
+										DateTimeDateFromNum,
+										DateTimeDateFromStr,
+									),
+					reader      => $reader,
+					writer      => $writer,
+				);
+		}
+	}
+};
+
+#########1 Other Public Attributes      4#########5#########6#########7#########8#########9
 
 has 'week_end' =>(
         isa     => WeekDay->plus_coercions( WeekDayFromStr ),
@@ -42,30 +101,10 @@ has 'week_end' =>(
         reader  => '_get_weekend',
 );
 
-# set up public attributes for the @datearray
-for my $dateattribute ( @datearray ) {
-    my $predicate   = 'has_' . $dateattribute;
-    my $reader      = 'get_' . $dateattribute;
-    my $writer      = 'set_' . $dateattribute;
-    has $dateattribute =>(
-        isa         => DateTimeDate->plus_coercions(
-							DateTimeDateFromHashRef,
-							DateTimeDateFromArrayRef,
-							DateTimeDateFromNum,
-							DateTimeDateFromStr,
-						),
-        coerce      => 1,
-        predicate   => $predicate,
-        reader      => $reader,
-        writer      => $writer,
-        trigger     => sub{ $_[3] = $dateattribute; _load_day( @_ ); },
-    );
-}
-
 #########1 Public Methods     3#########4#########5#########6#########7#########8#########9
 
 sub get_now{### for real time checking - get_today is when the module started
-    my ( $self ) = @_;
+    #~ my ( $self ) = @_;
     #### <where> - Reached get_now ...
     return DateTimeDateFromStr->( 'now' );
 }
@@ -83,26 +122,6 @@ has '_today' => (
         reader      => 'get_today',
         writer      => '_set_today',
     );
-
-# set up private attributes for the @datearray weekbounds
-for my $terminator ( '_wkstart', '_wkend' ) {
-    for my $datename ( @datearray, 'today' ) {
-        my  $attributename   = $datename . $terminator;
-        my  $reader     = 'get_' . $attributename;
-        my  $writer     = '_set_' . $attributename;
-        has '_' . $attributename =>( #
-                is 			=> 'ro',
-                isa         => DateTimeDate->plus_coercions(
-									DateTimeDateFromHashRef,
-									DateTimeDateFromArrayRef,
-									DateTimeDateFromNum,
-									DateTimeDateFromStr,
-								),
-                reader      => $reader,
-                writer      => $writer,
-            );
-    }
-}
 
 #########1 Private Methods    3#########4#########5#########6#########7#########8#########9
 
@@ -145,7 +164,7 @@ sub _find_weekend{
             ( $weekday < $weekstart ) ?
                 ( 7 - $weekstart + $weekday ):
                 ( $weekday - $weekstart ) ;
-    #### <where> - to week ene: $daysfromweekstart
+    #### <where> - to week end: $daysfromweekstart
     #### <where> - to week start: $daystoweekend
     return ( $daysfromweekstart, $daystoweekend );
 }
@@ -163,30 +182,33 @@ __END__
 
 =head1 NAME
 
-DateTimeX::Mashup::Shiras - A Moose role with four date attributes
+DateTimeX::Mashup::Shiras - A Moose role with date attributes
 
 =head1 SYNOPSIS
     
 	package MyPackage;
 	use Moose;
-	use MooseX::HasDefaults::RO;
-	with 'DateTimeX::Mashup::Shiras';
+	with 	'DateTimeX::Mashup::Shiras' =>{
+				date_attributes =>[ qw(
+					start_date end_date
+				) ],
+			};
 	no Moose;
 	__PACKAGE__->meta->make_immutable;
 
-	#!perl
+	#!env perl
 	my  $firstinst = MyPackage->new( 
-			'date_one' => '8/26/00',
+			'start_date' => '8/26/00',
 		);
-	print $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" ) . "\n";
-	print $firstinst->get_date_one_wkend->ymd( '' ) . "\n";
-	print $firstinst->get_date_one_wkstart->ymd( '' ) . "\n";
-	print $firstinst->set_date_three( '11-September-2001' ) . "\n";
-	print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
-	print $firstinst->set_date_one( -1299767400 ) . "\n";
-	print $firstinst->set_date_one( 36764.54167 ) . "\n";
-	print $firstinst->set_date_one( 0 ) . "\n";
-	print $firstinst->set_date_one( 60 ) . "\n";
+	print $firstinst->get_start_date->format_cldr( "yyyy-MMMM-d" ) . "\n";
+	print $firstinst->get_start_date_wkend->ymd( '' ) . "\n";
+	print $firstinst->get_start_date_wkstart->ymd( '' ) . "\n";
+	print $firstinst->set_end_date( '11-September-2001' ) . "\n";
+	print $firstinst->get_end_date_wkstart->dmy( '' ) . "\n";
+	print $firstinst->set_start_date( -1299767400 ) . "\n";
+	print $firstinst->set_start_date( 36764.54167 ) . "\n";
+	print $firstinst->set_start_date( 0 ) . "\n";
+	print $firstinst->set_start_date( 60 ) . "\n";
     
 	#######################################
 	#     Output of SYNOPSIS
@@ -195,7 +217,7 @@ DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 	# 03:20000826
 	# 04:2001-09-11T00:00:00
 	# 05:08092001
-	# 06:1928-10-26T09:30:00
+	# 06:1928-10-24T09:30:00
 	# 07:2000-08-26T13:00:00
 	# 09:1970-01-01T00:00:00
 	# 09:1970-01-01T00:01:00
@@ -206,31 +228,51 @@ DateTimeX::Mashup::Shiras - A Moose role with four date attributes
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-This is a Moose Role (L<Moose::Manual::Roles>) that 
-has four flexible date attributes and some additional date functionality.  This 
-role can add some date attributes to your class with built in date handling.  It 
-also provides the traditional today, now, and weekend date calculation for a given 
-day.
+This is a Moose Role (L<Moose::Manual::Roles>) that has configurable date attributes 
+and some additional date functionality.  This role can add some date attributes with 
+built in date conversion to your class.  It also provides the traditional today, now, 
+and weekend date calculation for the executed day.
 
-The flexibility of input for the dates comes from three different DateTime::Format 
-packages using type coersion.  The three modules are; L<DateTime::Format::Flexible>.  
-L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.  
+The date conversion functionality comes from three different DateTime::Format 
+packages using L<Type::Tiny> coersion.  The three modules are; 
+L<DateTime::Format::Flexible>, L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.  
 The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types> as a type 
-coersion.  This means that all input strings are parsed by ::Format::Flexible.  All 
+coersion.  As a general rule all input strings are parsed by ::Format::Flexible.  All 
 numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type 
 package for the details and corner cases.  Since all the succesful date 'getters' 
 return DateTime objects, all the L<DateTime> methods can be applied directly.  
 ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ). 
 
-=head2 Attributes
+=head2 Parameters
 
-Attributes listed here can be passed to -E<gt>new as listed below.
+This is a L<MooseX::Role::Parameterized> role. The following parameters are passed as 
+keys to a hash_ref when calling B<with 'DateTimeX::Mashup::Shiras' =E<gt>{ %args }>. 
 
-=head3 (date_one|date_two|date_three|date_four)
+=head3 date_attributes 
 
 =over
 
-B<Definition:> these are date attributes set to the type 'datetimedate'.  
+B<Definition:> This is any array ref of the requested date attributes for the target 
+class consuming this role.  To review the behavior of each named attribute review the 
+documentation for L<$named_attribute|/$named_attribute> below.
+
+B<Default> if this key is not called the role will set up the following four attributes; 
+[ qw( date_one date_two date_three date_four )] (Yes four is arbitrary)
+
+B<Range> any string that can be treated as an attribute name.
+
+=back
+
+=head2 Attributes
+
+Data passed to new when creating an instance of the consuming class.  For modification of 
+these attributes see the listed L</Methods> of the instance.
+
+=head3 $named_attribute
+
+=over
+
+B<Definition:> these are date attributes set to the type 'DateTimeDate'.  
 See the L<Type|DateTimeX::Mashup::Shiras::Types> Class for more details.
 
 B<Default> empty
@@ -260,7 +302,7 @@ All attributes are set as 'ro' so other than ->new(  ) these methods are the onl
 to change or clear attributes.  See L<Moose::Manual::Roles> for generic implementation 
 instructions.
 
-=head3 set_(date_one|date_two|date_three|date_four)( $date )
+=head3 set_${named_attribute}( $date )
 
 =over
 
@@ -273,20 +315,19 @@ B<Returns:> the equivalent DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|date_four|today|now)->format_command( 'format' )
+=head3 get_(${named_attribute}|today|now)->format_command( 'format' )
 
 =over
 
 B<Definition:> This is how you can call various dates and format their 
-output.  example $self->get_date_two->ymd( "-" ).  For this example 
-the date_two attribute had been previously set.  B<Note:> 'today' and 'now' 
+output.  example $self->get_today->ymd( "-" ).  B<Note:> 'today' and 'now' 
 are special attribute cases and do not need to be defined to be retrieved.
 
 B<Returns:> a DateTime object
 
 =back
 
-=head3 get_(date_one|date_two|date_three|date_four|today)_(wkend|wkstart)
+=head3 get_(${named_attribute}|today)_(wkend|wkstart)
 
 =over
 
@@ -355,7 +396,7 @@ B<5.010> - (L<perl>)
 
 L<version>
 
-L<Moose::Role>
+L<MooseX::Role::Parameterized>
 
 L<Type::Tiny>
 

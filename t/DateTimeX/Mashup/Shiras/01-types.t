@@ -11,8 +11,6 @@ if( $ENV{ Smart_Comments } ){
 $| = 1;
 
 use	Test::Most tests => 32;
-use	Test::Moose;
-use Data::Dumper;
 use	DateTime;
 use Capture::Tiny qw( capture_stderr );
 use Types::Standard -types;

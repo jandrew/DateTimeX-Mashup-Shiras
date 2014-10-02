@@ -1,22 +1,24 @@
 package MyPackage;
 use Moose;
-use MooseX::HasDefaults::RO;
 use lib '../../../lib';
-with 'DateTimeX::Mashup::Shiras';
-
+with 	'DateTimeX::Mashup::Shiras' =>{
+			date_attributes =>[ qw(
+				start_date end_date
+			) ],
+		};
 no Moose;
 __PACKAGE__->meta->make_immutable;
 
-#!perl
+#!env perl
 my  $firstinst = MyPackage->new( 
-		'date_one' => '8/26/00',
+		'start_date' => '8/26/00',
     );
-print $firstinst->get_date_one->format_cldr( "yyyy-MMMM-d" ) . "\n";
-print $firstinst->get_date_one_wkend->ymd( '' ) . "\n";
-print $firstinst->get_date_one_wkstart->ymd( '' ) . "\n";
-print $firstinst->set_date_three( '11-September-2001' ) . "\n";
-print $firstinst->get_date_three_wkstart->dmy( '' ) . "\n";
-print $firstinst->set_date_one( -1299767400 ) . "\n";
-print $firstinst->set_date_one( 36764.54167 ) . "\n";
-print $firstinst->set_date_one( 0 ) . "\n";
-print $firstinst->set_date_one( 60 ) . "\n";
+print $firstinst->get_start_date->format_cldr( "yyyy-MMMM-d" ) . "\n";
+print $firstinst->get_start_date_wkend->ymd( '' ) . "\n";
+print $firstinst->get_start_date_wkstart->ymd( '' ) . "\n";
+print $firstinst->set_end_date( '11-September-2001' ) . "\n";
+print $firstinst->get_end_date_wkstart->dmy( '' ) . "\n";
+print $firstinst->set_start_date( -1299767400 ) . "\n";
+print $firstinst->set_start_date( 36764.54167 ) . "\n";
+print $firstinst->set_start_date( 0 ) . "\n";
+print $firstinst->set_start_date( 60 ) . "\n";
