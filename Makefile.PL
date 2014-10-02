@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "A Moose role with four date attributes",
+  "ABSTRACT" => "A Moose role with date attributes",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -26,6 +26,7 @@ my %WriteMakefileArgs = (
     "DateTime::Format::Flexible" => 0,
     "DateTimeX::Format::Excel" => "v0.12.0",
     "Moose::Role" => 0,
+    "MooseX::Role::Parameterized" => 0,
     "Smart::Comments" => 0,
     "Type::Library" => 0,
     "Type::Utils" => "0.046",
@@ -37,9 +38,7 @@ my %WriteMakefileArgs = (
   },
   "TEST_REQUIRES" => {
     "Capture::Tiny" => 0,
-    "Data::Dumper" => 0,
     "Moose" => 0,
-    "MooseX::HasDefaults::RO" => 0,
     "MooseX::ShortCut::BuildInstance" => "v1.26.0",
     "Test::MockTime" => 0,
     "Test::Moose" => 0,
@@ -47,7 +46,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "YAML::Any" => 0
   },
-  "VERSION" => "v0.30.4",
+  "VERSION" => "v0.31_1",
   "test" => {
     "TESTS" => "t/*.t t/DateTimeX/Mashup/*.t t/DateTimeX/Mashup/Shiras/*.t"
   }
@@ -56,14 +55,13 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Capture::Tiny" => 0,
-  "Data::Dumper" => 0,
   "DateTime" => 0,
   "DateTime::Format::Epoch" => "0.013",
   "DateTime::Format::Flexible" => 0,
   "DateTimeX::Format::Excel" => "v0.12.0",
   "Moose" => 0,
   "Moose::Role" => 0,
-  "MooseX::HasDefaults::RO" => 0,
+  "MooseX::Role::Parameterized" => 0,
   "MooseX::ShortCut::BuildInstance" => "v1.26.0",
   "Smart::Comments" => 0,
   "Test::MockTime" => 0,
