@@ -54,7 +54,7 @@ my %WriteMakefileArgs = (
     "YAML::Any" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v0.32.4",
+  "VERSION" => "v0.32.6",
   "test" => {
     "TESTS" => "t/DateTimeX/Mashup/*.t t/DateTimeX/Mashup/Shiras/*.t"
   }

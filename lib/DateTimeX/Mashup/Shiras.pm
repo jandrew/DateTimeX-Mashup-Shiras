@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.32.4");
+use version 0.77; our $VERSION = qv("v0.32.6");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -413,9 +413,9 @@ L<Smart::Comments>
 
 =over
 
-=item Jed Lund
+Jed Lund
 
-=item jandrew@cpan.org
+jandrew@cpan.org
 
 =back
 
@@ -428,7 +428,7 @@ patches, bug reports, help with troubleshooting, etc. A huge
 
 =over
 
-=item Toby Inkster
+L<Toby Inkster|https://github.com/tobyink>
 
 =back
 

@@ -233,9 +233,9 @@ L<Smart::Comments>
 
 =over
 
-=item Jed Lund
+Jed Lund
 
-=item jandrew@cpan.org
+jandrew@cpan.org
 
 =back
 
@@ -248,7 +248,7 @@ patches, bug reports, help with troubleshooting, etc. A huge
 
 =over
 
-=item Toby Inkster
+L<Toby Inkster|https://github.com/tobyink>
 
 =back
 

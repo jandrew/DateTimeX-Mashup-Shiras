@@ -32,10 +32,10 @@ name: DateTimeX-Mashup-Shiras
 provides:
   DateTimeX::Mashup::Shiras:
     file: lib/DateTimeX/Mashup/Shiras.pm
-    version: v0.32.4
+    version: v0.32.6
   DateTimeX::Mashup::Shiras::Types:
     file: lib/DateTimeX/Mashup/Shiras/Types.pm
-    version: v0.32.4
+    version: v0.32.6
 requires:
   DateTime: 0
   DateTime::Format::Epoch: 0.013
@@ -56,8 +56,7 @@ resources:
   bugtracker: https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues
   homepage: https://github.com/jandrew/DateTimeX-Mashup-Shiras
   repository: https://github.com/jandrew/DateTimeX-Mashup-Shiras.git
-version: v0.32.4
+version: v0.32.6
 x_authority: cpan:JANDREW
 x_contributors:
-  - 'Jed <jandrew@cpan.org>'
-  - 'jandrew <jandrew@cpan.org>'
+  - 'Toby Inkster <tobyink@cpan.org>'
