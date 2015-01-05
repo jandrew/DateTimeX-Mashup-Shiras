@@ -15,6 +15,6 @@ BEGIN{ use_ok( Test::MockTime ) };
 BEGIN{ use_ok( YAML::Any ) };
 BEGIN{ use_ok( Smart::Comments ) };
 use lib '../lib';
-BEGIN{ use_ok( DateTimeX::Mashup::Shiras, 0.031 ) };
-BEGIN{ use_ok( DateTimeX::Mashup::Shiras::Types, 0.031 ) };
+BEGIN{ use_ok( DateTimeX::Mashup::Shiras, 0.032 ) };
+BEGIN{ use_ok( DateTimeX::Mashup::Shiras::Types, 0.032 ) };
 done_testing();

@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.94; our $VERSION = qv("v0.32.2");
+use version 0.77; our $VERSION = qv("v0.32.4");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -228,10 +228,9 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
 Moose found in the western United States.
 
-This is a Moose Role (L<Moose::Manual::Roles>) that has configurable date attributes 
-and some additional date functionality.  This role can add some date attributes with 
-built in date conversion to your class.  It also provides the traditional today, now, 
-and weekend date calculation for the executed day.
+This is a Moose Role (L<Moose::Manual::Roles>) that can add date based attributes 
+with some built in date converions to your Moose class.  It also provides the 
+traditional today, now, and weekend date calculation for the executed day.
 
 The date conversion functionality comes from three different DateTime::Format 
 packages using L<Type::Tiny> coersion.  The three modules are; 
@@ -257,7 +256,7 @@ class consuming this role.  To review the behavior of each named attribute revie
 documentation for L<$named_attribute|/$named_attribute> below.
 
 B<Default> if this key is not called the role will set up the following four attributes; 
-[ qw( date_one date_two date_three date_four )] (Yes four is arbitrary)
+[ qw( date_one date_two date_three date_four )] (Yes the count four is arbitrary)
 
 B<Range> any string that can be treated as an attribute name.
 
@@ -349,6 +348,54 @@ non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will
 load and turn on smart comment reporting.  There are three levels of 'Smartness' 
 available in this module '###',  '####', and '#####'.
 
+=head1 BUILD / INSTALL from Source
+	
+B<1.> Download a compressed file with this package code from your favorite source
+
+=over
+
+L<Meta::CPAN|https://metacpan.org/pod/DateTimeX::Mashup::Shiras>
+
+L<github|https://github.com/jandrew/DateTimeX-Mashup-Shiras>
+
+L<CPAN|http://search.cpan.org/~jandrew/DateTimeX-Mashup-Shiras/>
+
+=back
+	
+B<3.> Extract the code from the compressed file.
+
+=over
+
+If you are using tar on a .tar.gz file this should work:
+
+	tar -zxvf DateTimeX-Mashup-Shiras-v0.xx.tar.gz
+	
+=back
+
+B<4.> Change (cd) into the extracted directory
+
+B<5.> Run the following
+
+=over
+
+(for Windows find what version of make was used to compile your perl)
+
+	perl  -V:make
+	
+(then for Windows substitute the correct make function (s/make/dmake/g)? below)
+	
+=back
+
+	>perl Makefile.PL
+
+	>make
+
+	>make test
+
+	>make install # As sudo/root
+
+	>make clean
+
 =head1 SUPPORT
 
 L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mashup-Shiras/issues>
@@ -360,12 +407,6 @@ L<github DateTimeX-Mashup-Shiras/issues|https://github.com/jandrew/DateTimeX-Mas
 B<1.> Add L<Log::Shiras|https://github.com/jandrew/Log-Shiras> debugging in exchange for
 L<Smart::Comments>
 
-=over
-
-* Get Log::Shiras CPAN ready first (Still some deep recursion issues)
-
-=back
-
 =back
 
 =head1 AUTHOR
@@ -375,6 +416,19 @@ L<Smart::Comments>
 =item Jed Lund
 
 =item jandrew@cpan.org
+
+=back
+
+=head1 CONTRIBUTORS
+
+This is the (likely incomplete) list of people who have helped
+make this distribution what it is, either via code contributions, 
+patches, bug reports, help with troubleshooting, etc. A huge
+'thank you' to all of them.
+
+=over
+
+=item Toby Inkster
 
 =back
 
@@ -402,12 +456,6 @@ L<Type::Tiny>
 
 L<DateTimeX::Mashup::Shiras::Types>
 
-=over
-
-B<includes depenencies to>
-
-=over
-
 L<DateTime|https://metacpan.org/module/DateTime>
 
 L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
@@ -415,10 +463,6 @@ L<DateTime::Format::Epoch|https://metacpan.org/module/DateTime::Format::Epoch>
 L<DateTime::Format::Excel|https://metacpan.org/module/DateTime::Format::Excel>
 
 L<DateTime::Format::Flexible|https://metacpan.org/module/DateTime::Format::Flexible>
-
-=back
-
-=back
 
 =back
 

@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version 0.94; our $VERSION = qv("v0.32.2");
+use version 0.77; our $VERSION = qv("v0.32.4");
 use strict;
 use warnings;
 use 5.010;
@@ -7,7 +7,7 @@ use DateTime;
 use DateTime::Format::Epoch 0.013;
 use DateTimeX::Format::Excel v0.12;
 use DateTime::Format::Flexible;
-use Type::Utils 0.046 -all;
+use Type::Utils 1.000 -all;
 use Type::Library
 	-base,
 	-declare => qw(
@@ -191,6 +191,7 @@ sub _convert_list_to_date_time{
 
 #########1 Phinish            3#########4#########5#########6#########7#########8#########9
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 #########1 main pod docs      3#########4#########5#########6#########7#########8#########9

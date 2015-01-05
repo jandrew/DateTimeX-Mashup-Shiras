@@ -9,7 +9,6 @@ README.pod
 dist.ini
 lib/DateTimeX/Mashup/Shiras.pm
 lib/DateTimeX/Mashup/Shiras/Types.pm
-t/01-load.t
 t/DateTimeX/Mashup/01-shiras.t
 t/DateTimeX/Mashup/Shiras/01-types.t
 t/DateTimeX/Mashup/shiras_example.pl
