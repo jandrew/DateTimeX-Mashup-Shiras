@@ -15,8 +15,8 @@ for my $next ( <*> ){
 		last;
 	}
 }
-pod_file_ok( $up . 'lib\DateTimeX\Mashup\Shiras\Types.pm', "Types file has good POD" );
-pod_file_ok( $up . 'lib\DateTimeX\Mashup\Shiras.pm', "Shiras file has good POD" );
+pod_file_ok( $up . 'lib/DateTimeX/Mashup/Shiras/Types.pm', "Types file has good POD" );
+pod_file_ok( $up . 'lib/DateTimeX/Mashup/Shiras.pm', "Shiras file has good POD" );
 pod_file_ok( $up . 'README.pod', "The README file has good POD" );
 explain "...Test Done";
 done_testing();

@@ -1,0 +1,107 @@
+Revision history for DateTimeX::Mashup::Shiras
+
+{{$NEXT}}
+
+	! Reversed the file directory slashes in the pod test to see if will pass a TravisCI build
+	! Fixed a problem with the Travis build at developer only testing
+	+ Added cool badges
+	+ Added a .travis.yml file for TravisCI and Coveralls coverage
+
+v0.32.6   2015-01-05 10:11:00-08:00 America/Los_Angeles
+
+	! Properly attributed the tobyink contribution
+
+v0.32.4   2015-01-05 08:06:14-08:00 America/Los_Angeles
+
+	! Added MooseX::ShortCut::BuildInstance minimum version dependancy so that 
+		I could force a minimum Moose dependancy to get rid of the failing 
+		Moose load tests in CPAN testers
+	+ Long overdue adding of the CONTRIBUTORS Section
+	+ Immutabalized all the types in the package
+	+ Re-ordered the changes file from bottom to top vs top to bottom
+
+v0.32.2   2014-10-02 07:11:19-07:00 America/Los_Angeles
+
+	+ Rolling to a production revision since there are no obvious failures on CPAN
+
+v0.31_1   2014-10-01 22:46:55-07:00 America/Los_Angeles
+
+	+ Switched to run MooseX::Role::Parameterized
+		This allows a configurable number and naming of attributes
+		The old for attributes are default for backwards compatibility
+
+v0.30.4   2014-07-29 21:07:23-07:00 America/Los_Angeles
+
+	! Fixed a dependancy level requirement not correct in the META files
+
+v0.30.2   2014-07-29 15:28:07-07:00 America/Los_Angeles
+
+	+ Tracking changes changed to
+		+ New feature.
+		- Removed/deprecated feature.
+		! Bug fix.
+		* Place holder
+	+ Fixed the resources links in the META files
+	+ Switched to DateTimeX::Format::Excel in types
+	+ Switched Types to a Types::Tiny type file
+	+ Switched from MooseX::ClassCompositor to MooseX::ShortCut::BuildInstance
+	+ Rewrote the POD to support the new exported named coercions and the
+		requirement for using ->plus_coercions
+
+v0.28.2   2014-04-06 15:46:03 America/Los_Angeles
+
+	- Removed the setting for local timezone since it fails OpenBSD
+
+v0.26.2   2014-04-04 18:37:42 America/Los_Angeles
+
+	- Added a requirement for DateTime::TimeZone 1.64 to 
+		fix a failing bug in Open BSD
+
+v0.24.2   2013-12-15 00:22:19 America/Los_Angeles
+
+	- Added a fourth date attribute
+
+v0.22.4   2013-12-11 14:59:26 America/Los_Angeles
+
+	- Fixed a typo in the Smart_Comments
+
+
+v0.22.2   2013-12-11 08:19:56 America/Los_Angeles
+
+	- fixed the output of the time setting function to 
+		display correctly and separated the time cloneing 
+		feature from the weekend calculation to avoid any
+		possible misread
+	- switched from Date::Format::DateManip to ::Flexible
+	- changed the version back to a 'v' string
+	- Updated the POD for clarity(?)
+
+0.020.002 2013-08-31 10:31:25 America/Los_Angeles
+
+	- Adding use 5.008 for Kwalitee
+	- bringing versions consistent for Kwalitee
+	- Adding a provides section in the META file for Kwalitee
+
+0.014.002 2013-08-28 13:33:38 America/Los_Angeles
+
+	- Rolled to production versions and updated the POD with 
+		some additional details
+
+v0.007_007 2012-12-03 11:46:30 America/Los_Angeles
+
+	- Updated the Readme to POD format
+
+v0.007_005 2012-12-03 11:07:42 America/Los_Angeles
+
+	- Moved Smart::Comments into an if Block
+	- Changed the smart comment that indicates if it is 
+		turned on.
+
+v0.007_003 2012-04-19 10:36:44 America/Los_Angeles
+
+	- Changed the documentation slightly and added three 
+		position versions.
+
+v0.07_01  2012-04-03 14:26:02 America/Los_Angeles
+
+	- Initial Release
