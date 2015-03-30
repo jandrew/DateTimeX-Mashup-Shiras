@@ -7,8 +7,16 @@ if( $@ ){
 }else{
 	plan tests => 3;
 }
-pod_file_ok( '..\lib\DateTimeX\Mashup\Shiras\Types.pm', "Types file has good POD" );
-pod_file_ok( '..\lib\DateTimeX\Mashup\Shiras.pm', "Shiras file has good POD" );
-pod_file_ok( '..\README.pod', "The README file has good POD" );
+my	$up		= '../';
+for my $next ( <*> ){
+	if( ($next eq 't') and -d $next ){
+		### <where> - found the t directory - must be using prove ...
+		$up	= '';
+		last;
+	}
+}
+pod_file_ok( $up . 'lib\DateTimeX\Mashup\Shiras\Types.pm', "Types file has good POD" );
+pod_file_ok( $up . 'lib\DateTimeX\Mashup\Shiras.pm', "Shiras file has good POD" );
+pod_file_ok( $up . 'README.pod', "The README file has good POD" );
 explain "...Test Done";
 done_testing();

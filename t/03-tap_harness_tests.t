@@ -23,8 +23,8 @@ my	$args ={
 		formatter => $formatter,
 	};
 my	@tests =(
-		[  '01-load.t', 'load_test' ],
-		[  '02-pod.t', 'pod_test' ],
+		[ $dir . '01-load.t', 'load_test' ],
+		[ $dir . '02-pod.t', 'pod_test' ],
 		[ $dir . $tests . 'Shiras/01-types.t', 'types_test' ],
 		[ $dir . $tests . '01-shiras.t', 'main_test' ],
 	);
