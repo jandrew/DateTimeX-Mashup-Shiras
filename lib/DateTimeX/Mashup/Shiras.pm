@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.32.6");
+use version 0.77; our $VERSION = qv("v0.32.8");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -183,6 +183,18 @@ __END__
 =head1 NAME
 
 DateTimeX::Mashup::Shiras - A Moose role with date attributes
+
+=begin html
+
+<a href="https://travis-ci.org/jandrew/DateTimeX-Mashup-Shiras"><img alt="Build Status" src="https://travis-ci.org/jandrew/DateTimeX-Mashup-Shiras.png?branch=master" alt='Travis Build'/></a>
+
+<a href="https://www.perl.org"><img src="https://img.shields.io/badge/perl-5.10+-brightgreen.svg" alt="perl version"></a>
+
+<a href='https://coveralls.io/r/jandrew/DateTimeX-Mashup-Shiras?branch=master'><img src='https://coveralls.io/repos/jandrew/DateTimeX-Mashup-Shiras/badge.svg?branch=master' alt='Coverage Status' /></a>
+
+<a href='http://cpants.cpanauthors.org/dist/DateTimeX-Mashup-Shiras'><img src='http://cpants.cpanauthors.org/dist/DateTimeX-Mashup-Shiras.png' alt='kwalitee' height="20"/></a>
+
+=end html
 
 =head1 SYNOPSIS
     
