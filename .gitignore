@@ -3,6 +3,5 @@
 DateTimeX-Mashup-Shiras*
 *.tar.gz
 *.zip
-MANIFEST.SKIP
 DevelopmentNotes.txt
 Makefile.old
