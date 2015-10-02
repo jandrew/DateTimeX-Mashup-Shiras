@@ -7,8 +7,12 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
-	
+
 	* Another cool change
+
+v0.34.4   2015-10-02 01:57:06-07:00 America/Los_Angeles
+	
+	! Bumped the rev to fix the rev badge
 
 v0.34.2   2015-10-01 21:45:52-07:00 America/Los_Angeles
 

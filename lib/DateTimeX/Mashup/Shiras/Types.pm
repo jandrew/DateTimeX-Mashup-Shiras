@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version; our $VERSION = qv("v0.32.8");
+use version; our $VERSION = qv("v0.34.4");
 use strict;
 use warnings;
 use 5.010;
@@ -8,7 +8,7 @@ use DateTime::Format::Epoch 0.013;
 use DateTimeX::Format::Excel v0.12;
 use DateTime::Format::Flexible;
 use Type::Utils 1.000 -all;
-use Type::Library
+use Type::Library 1.000
 	-base,
 	-declare => qw(
 		WeekDay
@@ -29,6 +29,7 @@ use Types::Standard qw(
 		is_Num
         Int
     );
+BEGIN{ extends "Types::Standard" };
 my $try_xs =
 		exists($ENV{PERL_TYPE_TINY_XS}) ? !!$ENV{PERL_TYPE_TINY_XS} :
 		exists($ENV{PERL_ONLY})         ?  !$ENV{PERL_ONLY} :

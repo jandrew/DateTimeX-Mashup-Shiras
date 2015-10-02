@@ -27,7 +27,7 @@ my %WriteMakefileArgs = (
     "Moose::Role" => 0,
     "MooseX::Role::Parameterized" => 0,
     "Smart::Comments" => 0,
-    "Type::Library" => 0,
+    "Type::Library" => "1.000",
     "Type::Utils" => "1.000",
     "Types::Standard" => 0,
     "lib" => 0,
@@ -54,7 +54,7 @@ my %WriteMakefileArgs = (
     "YAML::Any" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v0.34.2",
+  "VERSION" => "v0.34.4",
   "test" => {
     "TESTS" => "t/DateTimeX/Mashup/*.t t/DateTimeX/Mashup/Shiras/*.t"
   }
@@ -77,7 +77,7 @@ my %FallbackPrereqs = (
   "Test::MockTime" => 0,
   "Test::Moose" => 0,
   "Test::Most" => 0,
-  "Type::Library" => 0,
+  "Type::Library" => "1.000",
   "Type::Tiny" => "1.000",
   "Type::Utils" => "1.000",
   "Types::Standard" => 0,
