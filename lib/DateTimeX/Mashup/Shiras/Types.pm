@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version; our $VERSION = qv("v0.34.4");
+use version; our $VERSION = qv("v0.36.2");
 use strict;
 use warnings;
 use 5.010;
@@ -136,14 +136,23 @@ declare_coercion DateTimeDateFromStr,
 	to_type DateTimeDate,
 	from Str,
     via{ 
-        my $str		= $_;
+        my $str = $_;
 		my ( $dt_us, $dt_eu );
 		eval '$dt_us = DateTime::Format::Flexible->parse_datetime( $str )';
 		eval '$dt_eu = DateTime::Format::Flexible->parse_datetime( $str, european => 1, )';
-		if( !$dt_us and !$dt_eu ){
+		if( !$dt_us and !$dt_eu ){# handle double digit years in formats unreadable by ~::Flexible
+			my	$current_year = DateTime->now()->truncate( to => 'year' );
+			my	$century_prefix = substr( $current_year, 0, 2 );
+			my	$century_postfix = substr( $current_year, 2, 2 );
+			my	$bump_year = ( $century_postfix + 20 > 99 ) ? ( $century_postfix - 80 ) : undef;# The double digit years are probably less than 21 years in the future of the processing time
+			my	$drop_year = ( $century_postfix - 79 < 0 ) ? ( $century_postfix + 21 ) : undef;# The double digit years are probably less than 81 years in the past of the processing time
 			$str =~ /(\d{1,2})\D(\d{1,2})\D(\d{1,2})(\s|T)(\d{1,2})\D(\d{1,2})(\D(\d{1,2}))?/;
-			my $us_str = sprintf "20%u-%02u-%02uT%02u:%02u:%02u", $3, $1, $2, $5, $6, ($7//'00');
-			my $eu_str = sprintf "20%u-%02u-%02uT%02u:%02u:%02u", $3, $2, $1, $5, $6, ($7//'00');
+			my $year = $3;
+			   $year = (
+					(defined $bump_year and $year <= $bump_year ) ? $century_prefix + 1 :
+					(defined $drop_year and $year >= $drop_year ) ? $century_prefix - 1 : $century_prefix ) . sprintf '%02u', $year;
+			my $us_str = sprintf "%u-%02u-%02uT%02u:%02u:%02u", $year, $1, $2, $5, $6, ($7//'00');
+			my $eu_str = sprintf "%u-%02u-%02uT%02u:%02u:%02u", $year, $2, $1, $5, $6, ($7//'00');
 			eval '$dt_us = DateTime::Format::Flexible->parse_datetime( $us_str )';
 			eval '$dt_eu = DateTime::Format::Flexible->parse_datetime( $eu_str )';# european => 1,
 			$str = $us_str;

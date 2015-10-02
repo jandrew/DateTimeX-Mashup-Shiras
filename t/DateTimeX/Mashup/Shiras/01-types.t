@@ -9,7 +9,7 @@ if( $ENV{ Smart_Comments } ){
 	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance-Types test...
 }
 $| = 1;
-use	Test::Most tests => 38;
+use	Test::Most tests => 39;
 use	DateTime;
 use Data::Dumper;
 use Capture::Tiny qw( capture_stderr );
@@ -36,7 +36,7 @@ my			$question_ref =[
 				
 				$date_time, { day => 11, year => 2002, month => 9 }, '8/26/00',
 				'11-September-2001', -1299767400, 36764.54167, 0, 60, '2013-02-28 00:00:00',
-				'7/4/76', '4/7/76', '5-30-11 0:00', '4/7/76', '7/4/76',
+				'7/4/76', '4/7/76', '5-30-11 0:00', '4-7-76 0:00', '4/7/76', '7/4/76',
 				-0.1234, [-1, 'excel'],
 			];
 my			$answer_ref = [
@@ -49,7 +49,7 @@ my			$answer_ref = [
 				'2001-09-11T00:00:00', '1928-10-24T09:30:00', '2000-08-26T13:00:00',
 				'1970-01-01T00:00:00', '1970-01-01T00:01:00', '2013-02-28T00:00:00',
 				'1976-07-04T00:00:00', '1976-04-07T00:00:00', '2011-05-30T00:00:00',
-				'1976-07-04T00:00:00', '1976-04-07T00:00:00',
+				'1976-07-04T00:00:00', '1976-07-04T00:00:00', '1976-04-07T00:00:00',
 				qr/\QCould not use the number -|-0.1234|- as an Excel date or a Nix date\E/x,
 				qr/\QAttempting to treat --1- as an Excel serialized date failed in the DateTime conversion\E/x,
 				qr/\QAttempting to treat --1- as an Excel serialized date failed in the DateTime conversion\E/x,
@@ -81,13 +81,13 @@ ok			$DateTimeX::Mashup::Shiras::Types::european_first = 1,
 			map{
 is			$type_test->assert_coerce( $question_ref->[$_] ), $answer_ref->[$_],
 							"Check that a good DateTimeDate passes:" . Dumper( $question_ref->[$_] );
-			} ( 27..28 );
+			} ( 27..29 );
 			map{
 dies_ok{	$type_test->assert_coerce( $question_ref->[$_] ) }
 							"Check that a bad DateTimeDate fails: " . Dumper( $question_ref->[$_] );
 #~ explain		$@;
 like		$@, $answer_ref->[$_],
 							"... and check for the correct error message";
-			} ( 29..30 );
+			} ( 30..31 );
 explain 								"...Test Done";
 done_testing();

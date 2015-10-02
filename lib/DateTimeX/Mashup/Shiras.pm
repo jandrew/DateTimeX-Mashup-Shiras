@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.34.4");
+use version 0.77; our $VERSION = qv("v0.36.2");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -268,7 +268,13 @@ coersion.  As a general rule all input strings are parsed by ::Format::Flexible.
 numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type 
 package for the details and corner cases.  Since all the succesful date 'getters' 
 return DateTime objects, all the L<DateTime> methods can be applied directly.  
-ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ). 
+ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ).
+
+=head2 Warnings
+
+B<1.> Double digit years in some date text strings are problematic.  This package assumes 
+that all double digit dates are no more than 25 years in the future of processing time 
+(or more than 75 years before processing time)
 
 =head2 Parameters
 

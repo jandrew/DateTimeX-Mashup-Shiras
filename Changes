@@ -7,8 +7,15 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
-
+	
 	* Another cool change
+
+v0.36.2   2015-10-02 04:03:53-07:00 America/Los_Angeles
+
+	! Double digit years are always problematic
+		This package now makes the assumption that all double digit years fall 
+			within 20 years in the future or 80 years in the past. 
+		ex: for the processing year 1979 all read double digit years will be prepended with '19'
 
 v0.34.4   2015-10-02 01:57:06-07:00 America/Los_Angeles
 	
