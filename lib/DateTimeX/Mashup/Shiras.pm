@@ -1,9 +1,9 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.32.10");
+use version 0.77; our $VERSION = qv("v0.34.2");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
-	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras v0.31
+	### <where> - Smart-Comments turned on for DateTimeX-Mashup-Shiras: $VERSION
 }
 
 use 5.010;
@@ -468,7 +468,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013, 2014 by Jed Lund.
+This software is copyrighted (c) 2013, 2015 by Jed Lund.
 
 =head1 DEPENDENCIES
 

@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version 0.77; our $VERSION = qv("v0.32.8");
+use version; our $VERSION = qv("v0.32.8");
 use strict;
 use warnings;
 use 5.010;
@@ -49,6 +49,7 @@ our	$epochdt = DateTime->new(
     );
 
 our	$excel_type = 'win_excel';
+our $european_first = 0;
 
 my  $epochformtr = DateTime::Format::Epoch->new(
         epoch               => $epochdt,
@@ -135,8 +136,20 @@ declare_coercion DateTimeDateFromStr,
 	from Str,
     via{ 
         my $str		= $_;
-		my $dt		= DateTime::Format::Flexible->parse_datetime( $str );
-		my $return	= ( $dt ) ? $dt :
+		my ( $dt_us, $dt_eu );
+		eval '$dt_us = DateTime::Format::Flexible->parse_datetime( $str )';
+		eval '$dt_eu = DateTime::Format::Flexible->parse_datetime( $str, european => 1, )';
+		if( !$dt_us and !$dt_eu ){
+			$str =~ /(\d{1,2})\D(\d{1,2})\D(\d{1,2})(\s|T)(\d{1,2})\D(\d{1,2})(\D(\d{1,2}))?/;
+			my $us_str = sprintf "20%u-%02u-%02uT%02u:%02u:%02u", $3, $1, $2, $5, $6, ($7//'00');
+			my $eu_str = sprintf "20%u-%02u-%02uT%02u:%02u:%02u", $3, $2, $1, $5, $6, ($7//'00');
+			eval '$dt_us = DateTime::Format::Flexible->parse_datetime( $us_str )';
+			eval '$dt_eu = DateTime::Format::Flexible->parse_datetime( $eu_str )';# european => 1,
+			$str = $us_str;
+		}
+		my $return	= 
+			( $DateTimeX::Mashup::Shiras::Types::european_first and $dt_eu )? $dt_eu :
+			( $dt_us ) ? $dt_us :  ( $dt_eu ) ? $dt_eu :
 				"Failed to build a date time from DateTime::Format::Flexible (or any other method) for string -$str-\n";
 		return $return;
     };
@@ -359,6 +372,12 @@ until the next change.
 
 This variable holds the default excel type for L<DateTimeX::Format::Excel>.  
 The default is 'win_excel'.
+
+=head2 $DateTimeX::Mashup::Shiras::Types::european_first
+
+When date strings are parsed it checks D-M-Y prior to M-D-Y.  This is default off.
+
+B<range:> 1|0
 
 =head1 SUPPORT
 

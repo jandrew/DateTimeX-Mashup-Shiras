@@ -7,7 +7,14 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
+	
+	* Another cool change
 
+v0.34.2   2015-10-01 21:45:52-07:00 America/Los_Angeles
+
+	+ Added a global variable to check D-M-Y prior to M-D-Y
+		The way it should be (just not in the USA)
+	+ Check for D-M-Y date after it looks for M-D-Y
 	+ Additional badge changes
 
 v0.32.8   2015-03-30 12:01:12-07:00 America/Los_Angeles
