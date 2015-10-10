@@ -7,6 +7,10 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
+	
+	* Another cool change
+
+v0.36.6   2015-10-10 16:42:16-07:00 America/Los_Angeles
 
 	! Removed passed non-functional date strings
 
