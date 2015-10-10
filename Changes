@@ -8,11 +8,11 @@ Uses the change tracking convention
 
 {{$NEXT}}
 
-	* Another cool feature
+	! Removed passed non-functional date strings
 
 v0.36.4   2015-10-02 04:14:14-07:00 America/Los_Angeles
 	
-	! Fixed the POD to accuratly reflect the double digit implementation
+	! Fixed the POD to accuratly reflect the double digit year implementation
 
 v0.36.2   2015-10-02 04:03:53-07:00 America/Los_Angeles
 
