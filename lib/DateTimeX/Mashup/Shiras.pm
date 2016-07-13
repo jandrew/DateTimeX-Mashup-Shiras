@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.36.8");
+use version 0.77; our $VERSION = version->declare("v0.36.10");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -198,8 +198,8 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 	<img src='https://coveralls.io/repos/jandrew/DateTimeX-Mashup-Shiras/badge.svg?branch=master' alt='Coverage Status' />
 </a>
 
-<a>
-	<img src="https://img.shields.io/badge/this version-0.36.6-brightgreen.svg" alt="this version">
+<a href='https://github.com/jandrew/DateTimeX-Mashup-Shiras'>
+	<img src="https://img.shields.io/github/tag/jandrew/DateTimeX-Mashup-Shiras.svg?label=github level" alt="github level"/>
 </a>
 
 <a href="https://metacpan.org/pod/DateTimeX::Mashup::Shiras">

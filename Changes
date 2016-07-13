@@ -10,6 +10,11 @@ Uses the change tracking convention
 
 	* Another cool change
 
+v0.36.10  2016-07-13 08:40:52-07:00 America/Los_Angeles
+
+	+ Switched to github release tracking in the badges section
+	+ Added travis support for perl 5.22 and 5.24
+
 v0.36.8   2016-07-13 08:00:38-07:00 America/Los_Angeles
 	
 	! Attempt to resolve CPAN Testers fail
