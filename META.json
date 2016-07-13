@@ -4,13 +4,13 @@
       "Jed Lund <jandrew@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.037, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "Dist::Zilla version 6.005, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "DateTimeX-Mashup-Shiras",
    "prereqs" : {
@@ -22,7 +22,7 @@
       },
       "runtime" : {
          "requires" : {
-            "DateTime" : "0",
+            "DateTime" : "1.34",
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Flexible" : "0",
             "DateTimeX::Format::Excel" : "0.012",
@@ -43,7 +43,7 @@
          "requires" : {
             "Capture::Tiny" : "0",
             "Data::Dumper" : "0",
-            "DateTime" : "0",
+            "DateTime" : "1.34",
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Flexible" : "0",
             "DateTimeX::Format::Excel" : "0.012",
@@ -52,6 +52,7 @@
             "Moose::Role" : "0",
             "MooseX::Role::Parameterized" : "0",
             "MooseX::ShortCut::BuildInstance" : "1.028",
+            "Params::CheckCompiler" : "0.07",
             "Test::MockTime" : "0",
             "Test::Moose" : "0",
             "Test::Most" : "0",
@@ -65,11 +66,11 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.36.6"
+         "version" : "v0.36.8"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.36.6"
+         "version" : "v0.36.8"
       }
    },
    "release_status" : "stable",
@@ -84,7 +85,7 @@
          "web" : "https://github.com/jandrew/DateTimeX-Mashup-Shiras"
       }
    },
-   "version" : "v0.36.6",
+   "version" : "v0.36.8",
    "x_authority" : "cpan:JANDREW"
 }
 

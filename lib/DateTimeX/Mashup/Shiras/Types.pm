@@ -1,9 +1,9 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version; our $VERSION = qv("v0.36.6");
+use version; our $VERSION = qv("v0.36.8");
 use strict;
 use warnings;
 use 5.010;
-use DateTime;
+use DateTime 1.34;
 use DateTime::Format::Epoch 0.013;
 use DateTimeX::Format::Excel v0.12;
 use DateTime::Format::Flexible;

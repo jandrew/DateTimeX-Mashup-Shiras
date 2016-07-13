@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = qv("v0.36.6");
+use version 0.77; our $VERSION = qv("v0.36.8");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;

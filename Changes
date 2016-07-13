@@ -7,8 +7,13 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
-	
+
 	* Another cool change
+
+v0.36.8   2016-07-13 08:00:38-07:00 America/Los_Angeles
+	
+	! Attempt to resolve CPAN Testers fail
+		http://www.cpantesters.org/cpan/report/404c0840-439b-11e6-9e82-a22c63f69d7e
 
 v0.36.6   2015-10-10 16:42:16-07:00 America/Los_Angeles
 
