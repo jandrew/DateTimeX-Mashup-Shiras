@@ -41,6 +41,7 @@ my %WriteMakefileArgs = (
     "DateTime" => "1.34",
     "DateTime::Format::Epoch" => "0.013",
     "DateTime::Format::Flexible" => 0,
+    "DateTime::TimeZone" => "2.09",
     "DateTimeX::Format::Excel" => "0.012",
     "List::Util" => "1.33",
     "Moose" => "2.1213",
@@ -55,7 +56,7 @@ my %WriteMakefileArgs = (
     "YAML::Any" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v0.36.10",
+  "VERSION" => "v0.36.12",
   "test" => {
     "TESTS" => "t/DateTimeX/Mashup/*.t t/DateTimeX/Mashup/Shiras/*.t"
   }
@@ -67,6 +68,7 @@ my %FallbackPrereqs = (
   "DateTime" => "1.34",
   "DateTime::Format::Epoch" => "0.013",
   "DateTime::Format::Flexible" => 0,
+  "DateTime::TimeZone" => "2.09",
   "DateTimeX::Format::Excel" => "0.012",
   "List::Util" => "1.33",
   "Moose" => "2.1213",

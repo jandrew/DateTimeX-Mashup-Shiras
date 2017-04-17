@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version; our $VERSION = version->declare("v0.36.10");
+use version; our $VERSION = version->declare("v0.36.12");
 use strict;
 use warnings;
 use 5.010;
@@ -13,7 +13,7 @@ use Type::Library 1.000
 	-declare => qw(
 		WeekDay
 		DateTimeDate
-		
+
 		WeekDayFromStr
 		DateTimeDateFromHashRef
 		DateTimeDateFromArrayRef
@@ -43,10 +43,10 @@ if( $try_xs and exists $INC{'Type/Tiny/XS.pm'} ){
 
 #########1 Dispatch Tables and Module Variables   5#########6#########7#########8#########9
 
-our	$epochdt = DateTime->new( 
-        year => 1970, 
-        month => 1, 
-        day => 1 
+our	$epochdt = DateTime->new(
+        year => 1970,
+        month => 1,
+        day => 1
     );
 
 our	$excel_type = 'win_excel';
@@ -60,7 +60,7 @@ my  $epochformtr = DateTime::Format::Epoch->new(
         start_at            => 0,
         local_epoch         => undef,
     );
-my	$excelformter = 
+my	$excelformter =
 my  $weekdays = {
         'Monday'        => 1,
         'Tuesday'       => 2,
@@ -76,10 +76,10 @@ my  $weekdays = {
 
 declare WeekDay, as Int,
     where{ $_ >= 1 and $_ <= 7 },
-    message{ 
-        ( defined $_ ) ? 
-            "-$_- cannot be coerced to a weekday" : 
-            'No value passed to the weekday type test' 
+    message{
+        ( defined $_ ) ?
+            "-$_- cannot be coerced to a weekday" :
+            'No value passed to the weekday type test'
     };
 
 declare_coercion WeekDayFromStr,
@@ -102,7 +102,7 @@ declare DateTimeDate, as InstanceOf[ 'DateTime' ],
 declare_coercion DateTimeDateFromHashRef,
 	to_type DateTimeDate,
 	from HashRef,
-    via{ 
+    via{
         my $dt;
         my %input = %$_;
         return(
@@ -114,7 +114,7 @@ declare_coercion DateTimeDateFromHashRef,
 declare_coercion DateTimeDateFromArrayRef,
 	to_type DateTimeDate,
 	from ArrayRef,
-    via{ 
+    via{
         my $dt;
         my ( $arg, $type, $time_zone ) = @$_;
 		$type = _deduce_epoch_type( $arg, $type );
@@ -124,7 +124,7 @@ declare_coercion DateTimeDateFromArrayRef,
 declare_coercion DateTimeDateFromNum,
 	to_type DateTimeDate,
 	from Num,
-    via{ 
+    via{
         my $dt;
         my $arg		= $_;
 		my $type	= _deduce_epoch_type( $arg );
@@ -135,7 +135,7 @@ declare_coercion DateTimeDateFromNum,
 declare_coercion DateTimeDateFromStr,
 	to_type DateTimeDate,
 	from Str,
-    via{ 
+    via{
         my $str = $_;
 		my ( $dt_us, $dt_eu );
 		eval '$dt_us = DateTime::Format::Flexible->parse_datetime( $str )';
@@ -158,7 +158,7 @@ declare_coercion DateTimeDateFromStr,
 				eval '$dt_eu = DateTime::Format::Flexible->parse_datetime( $eu_str )';# european => 1,
 			}
 		}
-		my $return	= 
+		my $return	=
 			( $DateTimeX::Mashup::Shiras::Types::european_first and $dt_eu )? $dt_eu :
 			( $dt_us ) ? $dt_us :  ( $dt_eu ) ? $dt_eu :
 				"Failed to build a date time from DateTime::Format::Flexible (or any other method) for string -$str-\n";
@@ -182,7 +182,7 @@ sub _convert_list_to_date_time{
 	my ( $arg, $type, $time_zone ) = @_;
 	my ( $formatter, $parser_args );
 	if( $type eq 'epoch' ){
-		$formatter = DateTime::Format::Epoch->new( 
+		$formatter = DateTime::Format::Epoch->new(
 			epoch          => $epochdt,
 			unit           => 'seconds',
 			type           => 'int',    # or 'float', 'bigint'
@@ -211,7 +211,7 @@ sub _convert_list_to_date_time{
 		return $return;
 	}
 }
-	
+
 
 #########1 Phinish            3#########4#########5#########6#########7#########8#########9
 
@@ -226,7 +226,7 @@ __END__
 DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
 
 =head1 SYNOPSIS
-    
+
     #!perl
     package MyPackage;
 
@@ -235,7 +235,7 @@ DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
         WeekDay
 		WeekDayFromStr
     );
-    
+
     has 'attribute_1' => (
             is  => 'ro',
             isa => WeekDay->plus_coercions( WeekDayFromStr ),
@@ -243,26 +243,26 @@ DateTimeX::Mashup::Shiras::Types - Types for DateTimeX::Mashup::Shiras
 
 =head1 DESCRIPTION
 
-L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
+L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of
 Moose found in the western United States (of America).
 
-This is the custom type class that ships with the L<DateTimeX::Mashup::Shiras> 
-package.  Wherever possible coersion failures are passed back to the type so 
+This is the custom type class that ships with the L<DateTimeX::Mashup::Shiras>
+package.  Wherever possible coersion failures are passed back to the type so
 type errors will be explained.  The types are implemented using L<Type::Tiny>.
 
 =head2 L<Caveat utilitor|http://en.wiktionary.org/wiki/Appendix:List_of_Latin_phrases_(A%E2%80%93E)#C>
 
-All type tests included with this package are considered to be the fixed definition of 
+All type tests included with this package are considered to be the fixed definition of
 the types.  Any definition not included in the testing is considered flexible.
 
-This module uses L<Type::Tiny> which can, in the background, use L<Type::Tiny::XS>.  
-While in general this is a good thing you will need to make sure that 
-Type::Tiny::XS is version 0.010 or newer since the older ones didn't support the 
+This module uses L<Type::Tiny> which can, in the background, use L<Type::Tiny::XS>.
+While in general this is a good thing you will need to make sure that
+Type::Tiny::XS is version 0.010 or newer since the older ones didn't support the
 'Optional' method.
 
 =head2 Types
 
-There are no included coercions with these types.  Any coercion usage should be 
+There are no included coercions with these types.  Any coercion usage should be
 with -E<gt>plus_coercions from the L<list|/Coercions> below.
 
 =head3 WeekDay
@@ -271,7 +271,7 @@ with -E<gt>plus_coercions from the L<list|/Coercions> below.
 
 B<Definition: >integers ( 1 .. 7 )
 
-B<Coercions: >from a string.  The type will try to qr//i match the passed string 
+B<Coercions: >from a string.  The type will try to qr//i match the passed string
 to an english name of the week.
 
 =back
@@ -286,17 +286,17 @@ B<Definition: >a L<DateTime> instance
 
 =head2 Coercions
 
-These are named coercions available for export by this module.  For the 
-coercions to work with the Type they must be added to the type via 
--E<gt>plus_coercions.  To test the type and coercions together use the 
+These are named coercions available for export by this module.  For the
+coercions to work with the Type they must be added to the type via
+-E<gt>plus_coercions.  To test the type and coercions together use the
 -E<gt>coerce or -E<gt>assert_coerce functions.
 
 =head3 WeekDayFromStr
 
 =over
 
-B<Definition: >Takes a string that matches the full or any portion of 
-the initial letters in an english weekday name and converts it to an integer 
+B<Definition: >Takes a string that matches the full or any portion of
+the initial letters in an english weekday name and converts it to an integer
 (1..7) where 1 = Monday.  The match is case independant (qr/$_/i).
 
 =back
@@ -305,7 +305,7 @@ the initial letters in an english weekday name and converts it to an integer
 
 =over
 
-B<Definition: >This will take a HashRef and attempt to treat is as %$args for 
+B<Definition: >This will take a HashRef and attempt to treat is as %$args for
 the function Datetime->new( %$args )
 
 =back
@@ -314,25 +314,25 @@ the function Datetime->new( %$args )
 
 =over
 
-B<Definition: > this will take an ArrayRef and use up to the first three positions 
-in the array as; [ $arg, $type, $time_zone ].  This is only used for passing numbers 
-coded as excel or unix epochs to be converted to DateTime objects.  The elements are 
+B<Definition: > this will take an ArrayRef and use up to the first three positions
+in the array as; [ $arg, $type, $time_zone ].  This is only used for passing numbers
+coded as excel or unix epochs to be converted to DateTime objects.  The elements are
 used as follows.
 
 =over
 
-B<$arg:> this is expected to be a number that falls either in the L<Unix|DateTime::Format::Epoch> 
+B<$arg:> this is expected to be a number that falls either in the L<Unix|DateTime::Format::Epoch>
 range or in the L<Microsoft Excel|DateTimeX::Format::Excel> range.
 
-B<$type:> this is a way to force the interpretation of the number.  The four 
-possibilites are; excel, win_excel, apple_excel, or epoch.  If epoch is called then 
-the number is interpreted by L<DateTime::Format::Epoch> and the global variable 
-L</$DateTimeX::Mashup::Shiras::Types::epochdt> will be used.  A $type eq 'excel' 
-setting will convert to the global variable L</$DateTimeX::Mashup::Shiras::Types::excel_type>.  
-Then the value will be passed to L<DateTimeX::Format::Excel> as the 'system_type' 
+B<$type:> this is a way to force the interpretation of the number.  The four
+possibilites are; excel, win_excel, apple_excel, or epoch.  If epoch is called then
+the number is interpreted by L<DateTime::Format::Epoch> and the global variable
+L</$DateTimeX::Mashup::Shiras::Types::epochdt> will be used.  A $type eq 'excel'
+setting will convert to the global variable L</$DateTimeX::Mashup::Shiras::Types::excel_type>.
+Then the value will be passed to L<DateTimeX::Format::Excel> as the 'system_type'
 for interpretation by that program.
 
-B<$time_zone:> if a value is entered then after $arg is converted to a DateTime object 
+B<$time_zone:> if a value is entered then after $arg is converted to a DateTime object
 the instance will have $dt-E<gt>set_time_zone( $time_zone ) called on it.
 
 =back
@@ -343,13 +343,13 @@ the instance will have $dt-E<gt>set_time_zone( $time_zone ) called on it.
 
 =over
 
-B<Definition: > This will check the number for 0 or 60 (microsoft issues), 
-negative integers, and positive integers with more than 7 digits and read them 
-as epoch (Nixy) dates. It will turn any positive integer or decimial with 
-less than 7 leading digits into an excel date using L<DateTime::Format::Excel>.  
-All positive decimals with 7 or more digits will also be treated as excel dates.  
-Negative decimals will fail.This will take a number and guess what type it is.  
-The data is then handled the same as L<an ArrayRef|/DateTimeDateFromArrayRef>. 
+B<Definition: > This will check the number for 0 or 60 (microsoft issues),
+negative integers, and positive integers with more than 7 digits and read them
+as epoch (Nixy) dates. It will turn any positive integer or decimial with
+less than 7 leading digits into an excel date using L<DateTime::Format::Excel>.
+All positive decimals with 7 or more digits will also be treated as excel dates.
+Negative decimals will fail.This will take a number and guess what type it is.
+The data is then handled the same as L<an ArrayRef|/DateTimeDateFromArrayRef>.
 
 =back
 
@@ -357,7 +357,7 @@ The data is then handled the same as L<an ArrayRef|/DateTimeDateFromArrayRef>.
 
 =over
 
-B<Definition: > This should be the final fall back check and it attempts to 
+B<Definition: > This should be the final fall back check and it attempts to
 turn any String into a DateTime object with L<DateTime::Format::Flexible>.
 
 =back
@@ -366,22 +366,22 @@ turn any String into a DateTime object with L<DateTime::Format::Flexible>.
 
 =head2 $ENV{Smart_Comments}
 
-The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
-encapsulated in an if block triggered by an environmental variable to comfort 
-non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will 
-load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is
+encapsulated in an if block triggered by an environmental variable to comfort
+non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will
+load and turn on smart comment reporting.  There are three levels of 'Smartness'
 available in this module '###',  '####', and '#####'.
 
 =head2 $DateTimeX::Mashup::Shiras::Types::epochdt
 
-This variable holds a L<DateTime> object set to; year => 1970, month => 1, 
-day => 1. To be used by L<DateTime::Format::Epoch> as the Epoch start.  If you 
-wish to change the epoch start change this variable.  All changes are permanent 
+This variable holds a L<DateTime> object set to; year => 1970, month => 1,
+day => 1. To be used by L<DateTime::Format::Epoch> as the Epoch start.  If you
+wish to change the epoch start change this variable.  All changes are permanent
 until the next change.
 
 =head2 $DateTimeX::Mashup::Shiras::Types::excel_type
 
-This variable holds the default excel type for L<DateTimeX::Format::Excel>.  
+This variable holds the default excel type for L<DateTimeX::Format::Excel>.
 The default is 'win_excel'.
 
 =head2 $DateTimeX::Mashup::Shiras::Types::european_first

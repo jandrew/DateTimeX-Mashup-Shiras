@@ -46,6 +46,7 @@
             "DateTime" : "1.34",
             "DateTime::Format::Epoch" : "0.013",
             "DateTime::Format::Flexible" : "0",
+            "DateTime::TimeZone" : "2.09",
             "DateTimeX::Format::Excel" : "0.012",
             "List::Util" : "1.33",
             "Moose" : "2.1213",
@@ -66,11 +67,11 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.36.10"
+         "version" : "v0.36.12"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.36.10"
+         "version" : "v0.36.12"
       }
    },
    "release_status" : "stable",
@@ -85,7 +86,7 @@
          "web" : "https://github.com/jandrew/DateTimeX-Mashup-Shiras"
       }
    },
-   "version" : "v0.36.10",
+   "version" : "v0.36.12",
    "x_authority" : "cpan:JANDREW"
 }
 
