@@ -10,7 +10,7 @@ Uses the change tracking convention
 
 	* Another cool change
 
-v0.36.14  2017-04-19 15:04:52-07:00 America/Los_Angeles
+v0.36.16  2017-04-19 16:11:06-07:00 America/Los_Angeles
 
 	! Updated the requirement for Params::CheckCompiler to Params::ValidationCompiler
 
