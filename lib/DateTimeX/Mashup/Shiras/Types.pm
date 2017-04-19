@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras::Types;
-use version; our $VERSION = version->declare("v0.36.12");
+use version; our $VERSION = version->declare("v0.36.14");
 use strict;
 use warnings;
 use 5.010;
