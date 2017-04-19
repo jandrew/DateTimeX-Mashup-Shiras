@@ -1,5 +1,5 @@
 package DateTimeX::Mashup::Shiras;
-use version 0.77; our $VERSION = version->declare("v0.36.12");
+use version 0.77; our $VERSION = version->declare("v0.36.16");
 
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -17,7 +17,7 @@ use lib '../../../lib', '../../lib';
 use DateTimeX::Mashup::Shiras::Types v0.30 qw(
         WeekDay
 		DateTimeDate
-		
+
 		WeekDayFromStr
 		DateTimeDateFromHashRef
 		DateTimeDateFromArrayRef
@@ -34,7 +34,7 @@ my  @datearray = qw(
 my	@attribute_list;
 
 #########1 Import and set up the attributes to be built     6#########7#########8#########9
- 
+
 parameter date_attributes =>(
 		isa      	=> ArrayRef,
 		predicate	=> '_has_date_attributes',
@@ -70,7 +70,7 @@ role{
 			trigger     => sub{ $_[3] = $dateattribute; _load_day( @_ ); },
 		);
 	}
-	
+
 	# build private attributes from the list
 	for my $terminator ( '_wkstart', '_wkend' ) {
 		for my $datename ( @attribute_list, 'today' ) {
@@ -150,7 +150,7 @@ sub _find_weekend{
     my  $weekend    = $self->_get_weekend;
     #### <where> - Reached _find_weekend
     my  $daystoweekend =
-            ( $weekday == $weekend ) ? 
+            ( $weekday == $weekend ) ?
                 0 :
             ( $weekday > $weekend ) ?
                 ( 7 - $weekday + $weekend ):
@@ -159,7 +159,7 @@ sub _find_weekend{
             ( $weekend == 7 ) ?
                 1 : $weekend + 1;
     my  $daysfromweekstart =
-            ( $weekday == $weekstart ) ? 
+            ( $weekday == $weekstart ) ?
                 0 :
             ( $weekday < $weekstart ) ?
                 ( 7 - $weekstart + $weekday ):
@@ -213,7 +213,7 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 =end html
 
 =head1 SYNOPSIS
-    
+
 	package MyPackage;
 	use Moose;
 	with 	'DateTimeX::Mashup::Shiras' =>{
@@ -225,7 +225,7 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 	__PACKAGE__->meta->make_immutable;
 
 	#!env perl
-	my  $firstinst = MyPackage->new( 
+	my  $firstinst = MyPackage->new(
 			'start_date' => '8/26/00',
 		);
 	print $firstinst->get_start_date->format_cldr( "yyyy-MMMM-d" ) . "\n";
@@ -237,7 +237,7 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 	print $firstinst->set_start_date( 36764.54167 ) . "\n";
 	print $firstinst->set_start_date( 0 ) . "\n";
 	print $firstinst->set_start_date( 60 ) . "\n";
-    
+
 	#######################################
 	#     Output of SYNOPSIS
 	# 01:2000-August-26
@@ -250,46 +250,46 @@ DateTimeX::Mashup::Shiras - A Moose role with date attributes
 	# 09:1970-01-01T00:00:00
 	# 09:1970-01-01T00:01:00
 	#######################################
-    
+
 =head1 DESCRIPTION
 
-L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of 
+L<Shiras|http://en.wikipedia.org/wiki/Moose#Subspecies> - A small subspecies of
 Moose found in the western United States.
 
-This is a Moose Role (L<Moose::Manual::Roles>) that can add date based attributes 
-with some built in date converions to your Moose class.  It also provides the 
+This is a Moose Role (L<Moose::Manual::Roles>) that can add date based attributes
+with some built in date converions to your Moose class.  It also provides the
 traditional today, now, and weekend date calculation for the executed day.
 
-The date conversion functionality comes from three different DateTime::Format 
-packages using L<Type::Tiny> coersion.  The three modules are; 
-L<DateTime::Format::Flexible>, L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.  
-The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types> as a type 
-coersion.  As a general rule all input strings are parsed by ::Format::Flexible.  All 
-numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type 
-package for the details and corner cases.  Since all the succesful date 'getters' 
-return DateTime objects, all the L<DateTime> methods can be applied directly.  
+The date conversion functionality comes from three different DateTime::Format
+packages using L<Type::Tiny> coersion.  The three modules are;
+L<DateTime::Format::Flexible>, L<DateTime::Format::Epoch>, and L<DateTimeX::Format::Excel>.
+The choice between them is managed by L<DateTimeX::Mashup::Shiras::Types> as a type
+coersion.  As a general rule all input strings are parsed by ::Format::Flexible.  All
+numbers are parsed either by ::Format::Excel or by ::Format::Epoch.  See the type
+package for the details and corner cases.  Since all the succesful date 'getters'
+return DateTime objects, all the L<DateTime> methods can be applied directly.
 ex. $inst-E<gt>get_today_wkend-E<gt>ymd( "/" ).
 
 =head2 Warnings
 
-B<1.> Double digit years in some date text strings are problematic.  This package assumes 
-that all double digit dates are no more than 20 years in the future of processing time 
+B<1.> Double digit years in some date text strings are problematic.  This package assumes
+that all double digit dates are no more than 20 years in the future of processing time
 (or more than 80 years before processing time)
 
 =head2 Parameters
 
-This is a L<MooseX::Role::Parameterized> role. The following parameters are passed as 
-keys to a hash_ref when calling B<with 'DateTimeX::Mashup::Shiras' =E<gt>{ %args }>. 
+This is a L<MooseX::Role::Parameterized> role. The following parameters are passed as
+keys to a hash_ref when calling B<with 'DateTimeX::Mashup::Shiras' =E<gt>{ %args }>.
 
-=head3 date_attributes 
+=head3 date_attributes
 
 =over
 
-B<Definition:> This is any array ref of the requested date attributes for the target 
-class consuming this role.  To review the behavior of each named attribute review the 
+B<Definition:> This is any array ref of the requested date attributes for the target
+class consuming this role.  To review the behavior of each named attribute review the
 documentation for L<$named_attribute|/$named_attribute> below.
 
-B<Default> if this key is not called the role will set up the following four attributes; 
+B<Default> if this key is not called the role will set up the following four attributes;
 [ qw( date_one date_two date_three date_four )] (Yes the count four is arbitrary)
 
 B<Range> any string that can be treated as an attribute name.
@@ -298,19 +298,19 @@ B<Range> any string that can be treated as an attribute name.
 
 =head2 Attributes
 
-Data passed to new when creating an instance of the consuming class.  For modification of 
+Data passed to new when creating an instance of the consuming class.  For modification of
 these attributes see the listed L</Methods> of the instance.
 
 =head3 $named_attribute
 
 =over
 
-B<Definition:> these are date attributes set to the type 'DateTimeDate'.  
+B<Definition:> these are date attributes set to the type 'DateTimeDate'.
 See the L<Type|DateTimeX::Mashup::Shiras::Types> Class for more details.
 
 B<Default> empty
 
-B<Range> epoch numbers, DateTime definition HashRefs, Date Epoch ArrayRefs, and 
+B<Range> epoch numbers, DateTime definition HashRefs, Date Epoch ArrayRefs, and
 human readable strings
 
 =back
@@ -323,23 +323,23 @@ B<Definition:> This holds the definition of the last day of the week
 
 B<Default> 'Friday'
 
-B<Range> This will accept either day names, day abbreviations 
+B<Range> This will accept either day names, day abbreviations
 (no periods), or day integers (1 = Monday, 7 = Sunday )
 
 =back
 
 =head2 Methods
 
-Methods are used to manipulate both the public and private attributes of this role.  
-All attributes are set as 'ro' so other than ->new(  ) these methods are the only way 
-to change or clear attributes.  See L<Moose::Manual::Roles> for generic implementation 
+Methods are used to manipulate both the public and private attributes of this role.
+All attributes are set as 'ro' so other than ->new(  ) these methods are the only way
+to change or clear attributes.  See L<Moose::Manual::Roles> for generic implementation
 instructions.
 
 =head3 set_${named_attribute}( $date )
 
 =over
 
-B<Definition:> This is the way to change (or set) the various dates.  
+B<Definition:> This is the way to change (or set) the various dates.
 
 B<Accepts:> Any $date data that can be coerced by L<supported ::Format
 |/DESCRIPTION> modules.
@@ -352,8 +352,8 @@ B<Returns:> the equivalent DateTime object
 
 =over
 
-B<Definition:> This is how you can call various dates and format their 
-output.  example $self->get_today->ymd( "-" ).  B<Note:> 'today' and 'now' 
+B<Definition:> This is how you can call various dates and format their
+output.  example $self->get_today->ymd( "-" ).  B<Note:> 'today' and 'now'
 are special attribute cases and do not need to be defined to be retrieved.
 
 B<Returns:> a DateTime object
@@ -364,8 +364,8 @@ B<Returns:> a DateTime object
 
 =over
 
-B<Definition:> This is a way to call the equivalent start and end of the 
-week definded by the given 'week_end' attribute value.  'now' is not included 
+B<Definition:> This is a way to call the equivalent start and end of the
+week definded by the given 'week_end' attribute value.  'now' is not included
 in this list.
 
 B<Returns:> a DateTime object
@@ -376,14 +376,14 @@ B<Returns:> a DateTime object
 
 =head2 $ENV{Smart_Comments}
 
-The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
-encapsulated in an if block triggered by an environmental variable to comfort 
-non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will 
-load and turn on smart comment reporting.  There are three levels of 'Smartness' 
+The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is
+encapsulated in an if block triggered by an environmental variable to comfort
+non-believers.  Setting the variable $ENV{Smart_Comments} in a BEGIN block will
+load and turn on smart comment reporting.  There are three levels of 'Smartness'
 available in this module '###',  '####', and '#####'.
 
 =head1 BUILD / INSTALL from Source
-	
+
 B<1.> Download a compressed file with this package code from your favorite source
 
 =over
@@ -395,7 +395,7 @@ L<github|https://github.com/jandrew/DateTimeX-Mashup-Shiras>
 L<CPAN|http://search.cpan.org/~jandrew/DateTimeX-Mashup-Shiras/>
 
 =back
-	
+
 B<3.> Extract the code from the compressed file.
 
 =over
@@ -403,7 +403,7 @@ B<3.> Extract the code from the compressed file.
 If you are using tar on a .tar.gz file this should work:
 
 	tar -zxvf DateTimeX-Mashup-Shiras-v0.xx.tar.gz
-	
+
 =back
 
 B<4.> Change (cd) into the extracted directory
@@ -415,9 +415,9 @@ B<5.> Run the following
 (for Windows find what version of make was used to compile your perl)
 
 	perl  -V:make
-	
+
 (then for Windows substitute the correct make function (s/make/dmake/g)? below)
-	
+
 =back
 
 	>perl Makefile.PL
@@ -456,7 +456,7 @@ jandrew@cpan.org
 =head1 CONTRIBUTORS
 
 This is the (likely incomplete) list of people who have helped
-make this distribution what it is, either via code contributions, 
+make this distribution what it is, either via code contributions,
 patches, bug reports, help with troubleshooting, etc. A huge
 'thank you' to all of them.
 

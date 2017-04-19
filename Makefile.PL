@@ -48,7 +48,7 @@ my %WriteMakefileArgs = (
     "Moose::Role" => 0,
     "MooseX::Role::Parameterized" => 0,
     "MooseX::ShortCut::BuildInstance" => "1.028",
-    "Params::CheckCompiler" => "0.07",
+    "Params::ValidationCompiler" => "0.24",
     "Test::MockTime" => 0,
     "Test::Moose" => 0,
     "Test::Most" => 0,
@@ -56,7 +56,7 @@ my %WriteMakefileArgs = (
     "YAML::Any" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v0.36.12",
+  "VERSION" => "v0.36.16",
   "test" => {
     "TESTS" => "t/DateTimeX/Mashup/*.t t/DateTimeX/Mashup/Shiras/*.t"
   }
@@ -75,7 +75,7 @@ my %FallbackPrereqs = (
   "Moose::Role" => 0,
   "MooseX::Role::Parameterized" => 0,
   "MooseX::ShortCut::BuildInstance" => "1.028",
-  "Params::CheckCompiler" => "0.07",
+  "Params::ValidationCompiler" => "0.24",
   "Smart::Comments" => 0,
   "Test::MockTime" => 0,
   "Test::Moose" => 0,

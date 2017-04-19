@@ -53,7 +53,7 @@
             "Moose::Role" : "0",
             "MooseX::Role::Parameterized" : "0",
             "MooseX::ShortCut::BuildInstance" : "1.028",
-            "Params::CheckCompiler" : "0.07",
+            "Params::ValidationCompiler" : "0.24",
             "Test::MockTime" : "0",
             "Test::Moose" : "0",
             "Test::Most" : "0",
@@ -67,11 +67,11 @@
    "provides" : {
       "DateTimeX::Mashup::Shiras" : {
          "file" : "lib/DateTimeX/Mashup/Shiras.pm",
-         "version" : "v0.36.12"
+         "version" : "v0.36.16"
       },
       "DateTimeX::Mashup::Shiras::Types" : {
          "file" : "lib/DateTimeX/Mashup/Shiras/Types.pm",
-         "version" : "v0.36.12"
+         "version" : "v0.36.16"
       }
    },
    "release_status" : "stable",
@@ -86,7 +86,7 @@
          "web" : "https://github.com/jandrew/DateTimeX-Mashup-Shiras"
       }
    },
-   "version" : "v0.36.12",
+   "version" : "v0.36.16",
    "x_authority" : "cpan:JANDREW"
 }
 
